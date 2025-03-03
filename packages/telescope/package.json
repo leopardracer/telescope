@@ -1,6 +1,6 @@
 {
   "name": "@cosmology/telescope",
-  "version": "1.11.21",
+  "version": "1.11.22",
   "description": "A TypeScript Transpiler for Cosmos Protobufs",
   "author": "Dan Lynch <pyramation@gmail.com>",
   "homepage": "https://github.com/hyperweb-io/telescope/tree/master/packages/telescope#readme",
@@ -90,8 +90,8 @@
     "@babel/parser": "^7.23.6",
     "@babel/traverse": "7.23.6",
     "@babel/types": "7.23.6",
-    "@cosmology/ast": "^1.9.9",
-    "@cosmology/proto-parser": "^1.9.6",
+    "@cosmology/ast": "^1.9.10",
+    "@cosmology/proto-parser": "^1.9.7",
     "@cosmology/types": "^1.11.6",
     "@cosmology/utils": "^1.9.6",
     "@cosmwasm/ts-codegen": "0.35.7",

@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.22](https://github.com/hyperweb-io/telescope/compare/@cosmology/telescope@1.11.21...@cosmology/telescope@1.11.22) (2025-03-03)
+
+**Note:** Version bump only for package @cosmology/telescope
+
 ## [1.11.21](https://github.com/hyperweb-io/telescope/compare/@cosmology/telescope@1.11.20...@cosmology/telescope@1.11.21) (2025-03-03)
 
 **Note:** Version bump only for package @cosmology/telescope
