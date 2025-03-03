@@ -2,7 +2,7 @@ import { EncodingTestForDontOmit, EncodingTestForDontOmitSDKType, EncodingTestFo
 import { AminoMsg, Pubkey } from "@cosmjs/amino";
 import { fromUtf8, toBase64, toUtf8, fromBase64 } from "@cosmjs/encoding";
 import { decodePubkey, encodePubkey } from "@cosmjs/proto-signing";
-import { padDecimal } from "../helpers";
+import { Decimal } from "@cosmjs/math";
 import { AccessConfig, AccessConfigSDKType, voteOptionFromJSON } from "./eval_request";
 import { Any, AnySDKType } from "../google/protobuf/any";
 import { Duration, DurationSDKType } from "../google/protobuf/duration";
@@ -255,10 +255,10 @@ export const AminoConverter = {
             type_url: el0.typeUrl,
             value: el0.value
           })),
-          dec: padDecimal(dOTests.dec),
-          d_o_dec: padDecimal(dOTests.dODec),
-          decs: dOTests.decs.map(el0 => padDecimal(el0)),
-          d_o_decs: dOTests.dODecs.map(el0 => padDecimal(el0))
+          dec: Decimal.fromUserInput(dOTests.dec, 18).atomics,
+          d_o_dec: Decimal.fromUserInput(dOTests.dODec, 18).atomics,
+          decs: dOTests.decs.map(el0 => Decimal.fromUserInput(el0, 18).atomics),
+          d_o_decs: dOTests.dODecs.map(el0 => Decimal.fromUserInput(el0, 18).atomics)
         },
         o_tests: {
           str: oTests.str,
@@ -331,10 +331,10 @@ export const AminoConverter = {
             type_url: el0.typeUrl,
             value: el0.value
           })),
-          dec: padDecimal(oTests.dec),
-          o_dec: padDecimal(oTests.oDec),
-          decs: oTests.decs.map(el0 => padDecimal(el0)),
-          o_decs: oTests.oDecs.map(el0 => padDecimal(el0))
+          dec: Decimal.fromUserInput(oTests.dec, 18).atomics,
+          o_dec: Decimal.fromUserInput(oTests.oDec, 18).atomics,
+          decs: oTests.decs.map(el0 => Decimal.fromUserInput(el0, 18).atomics),
+          o_decs: oTests.oDecs.map(el0 => Decimal.fromUserInput(el0, 18).atomics)
         }
       };
     },

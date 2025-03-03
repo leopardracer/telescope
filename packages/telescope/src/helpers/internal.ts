@@ -2,9 +2,7 @@ import { TelescopeOptions } from "@cosmology/types";
 
 export const getHelper = (options: TelescopeOptions) => {
   return `import * as _m0 from "protobufjs/minimal";
-import Long from 'long';${options.aminoEncoding?.customTypes?.useCosmosSDKDec ? `
-import { Dec } from "@keplr-wallet/unit";
-`: ""}
+import Long from 'long';
 
 // @ts-ignore
 if (_m0.util.Long !== Long) {
@@ -235,11 +233,6 @@ export function fromJsonTimestamp(o: any): Timestamp {
 
 function numberToLong(number: number) {
     return Long.fromNumber(number);
-}${options.aminoEncoding?.customTypes?.useCosmosSDKDec ? `
-
-export function padDecimal(decStr: string): string{
-  return decStr ? new Dec(decStr).toString() : decStr;
 }
-`: ""}
 `;
 }
