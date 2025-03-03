@@ -1,4 +1,5 @@
 import { BinaryReader, BinaryWriter } from "../../../binary";
+import { Decimal } from "@interchainjs/math";
 import { DeepPartial } from "../../../helpers";
 /** Minter represents the minting state. */
 export interface Minter {
@@ -198,7 +199,7 @@ export const Minter = {
   aminoType: "osmosis/mint/minter",
   encode(message: Minter, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.epochProvisions !== "") {
-      writer.uint32(10).string(message.epochProvisions);
+      writer.uint32(10).string(Decimal.fromUserInput(message.epochProvisions, 18).atomics);
     }
     return writer;
   },
@@ -210,7 +211,7 @@ export const Minter = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.epochProvisions = reader.string();
+          message.epochProvisions = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         default:
           reader.skipType(tag & 7);
@@ -272,7 +273,7 @@ export const WeightedAddress = {
       writer.uint32(10).string(message.address);
     }
     if (message.weight !== "") {
-      writer.uint32(18).string(message.weight);
+      writer.uint32(18).string(Decimal.fromUserInput(message.weight, 18).atomics);
     }
     return writer;
   },
@@ -287,7 +288,7 @@ export const WeightedAddress = {
           message.address = reader.string();
           break;
         case 2:
-          message.weight = reader.string();
+          message.weight = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         default:
           reader.skipType(tag & 7);
@@ -353,16 +354,16 @@ export const DistributionProportions = {
   aminoType: "osmosis/mint/distribution-proportions",
   encode(message: DistributionProportions, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.staking !== "") {
-      writer.uint32(10).string(message.staking);
+      writer.uint32(10).string(Decimal.fromUserInput(message.staking, 18).atomics);
     }
     if (message.poolIncentives !== "") {
-      writer.uint32(18).string(message.poolIncentives);
+      writer.uint32(18).string(Decimal.fromUserInput(message.poolIncentives, 18).atomics);
     }
     if (message.developerRewards !== "") {
-      writer.uint32(26).string(message.developerRewards);
+      writer.uint32(26).string(Decimal.fromUserInput(message.developerRewards, 18).atomics);
     }
     if (message.communityPool !== "") {
-      writer.uint32(34).string(message.communityPool);
+      writer.uint32(34).string(Decimal.fromUserInput(message.communityPool, 18).atomics);
     }
     return writer;
   },
@@ -374,16 +375,16 @@ export const DistributionProportions = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.staking = reader.string();
+          message.staking = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 2:
-          message.poolIncentives = reader.string();
+          message.poolIncentives = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 3:
-          message.developerRewards = reader.string();
+          message.developerRewards = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 4:
-          message.communityPool = reader.string();
+          message.communityPool = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         default:
           reader.skipType(tag & 7);
@@ -466,7 +467,7 @@ export const Params = {
       writer.uint32(10).string(message.mintDenom);
     }
     if (message.genesisEpochProvisions !== "") {
-      writer.uint32(18).string(message.genesisEpochProvisions);
+      writer.uint32(18).string(Decimal.fromUserInput(message.genesisEpochProvisions, 18).atomics);
     }
     if (message.epochIdentifier !== "") {
       writer.uint32(26).string(message.epochIdentifier);
@@ -475,7 +476,7 @@ export const Params = {
       writer.uint32(32).int64(message.reductionPeriodInEpochs);
     }
     if (message.reductionFactor !== "") {
-      writer.uint32(42).string(message.reductionFactor);
+      writer.uint32(42).string(Decimal.fromUserInput(message.reductionFactor, 18).atomics);
     }
     if (message.distributionProportions !== undefined) {
       DistributionProportions.encode(message.distributionProportions, writer.uint32(50).fork()).ldelim();
@@ -499,7 +500,7 @@ export const Params = {
           message.mintDenom = reader.string();
           break;
         case 2:
-          message.genesisEpochProvisions = reader.string();
+          message.genesisEpochProvisions = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 3:
           message.epochIdentifier = reader.string();
@@ -508,7 +509,7 @@ export const Params = {
           message.reductionPeriodInEpochs = reader.int64();
           break;
         case 5:
-          message.reductionFactor = reader.string();
+          message.reductionFactor = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 6:
           message.distributionProportions = DistributionProportions.decode(reader, reader.uint32());

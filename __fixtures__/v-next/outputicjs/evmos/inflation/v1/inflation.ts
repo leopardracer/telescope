@@ -1,4 +1,5 @@
 import { BinaryReader, BinaryWriter } from "../../../binary";
+import { Decimal } from "@interchainjs/math";
 import { DeepPartial } from "../../../helpers";
 /**
  * InflationDistribution defines the distribution in which inflation is
@@ -117,13 +118,13 @@ export const InflationDistribution = {
   typeUrl: "/evmos.inflation.v1.InflationDistribution",
   encode(message: InflationDistribution, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.stakingRewards !== "") {
-      writer.uint32(10).string(message.stakingRewards);
+      writer.uint32(10).string(Decimal.fromUserInput(message.stakingRewards, 18).atomics);
     }
     if (message.usageIncentives !== "") {
-      writer.uint32(18).string(message.usageIncentives);
+      writer.uint32(18).string(Decimal.fromUserInput(message.usageIncentives, 18).atomics);
     }
     if (message.communityPool !== "") {
-      writer.uint32(26).string(message.communityPool);
+      writer.uint32(26).string(Decimal.fromUserInput(message.communityPool, 18).atomics);
     }
     return writer;
   },
@@ -135,13 +136,13 @@ export const InflationDistribution = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.stakingRewards = reader.string();
+          message.stakingRewards = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 2:
-          message.usageIncentives = reader.string();
+          message.usageIncentives = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 3:
-          message.communityPool = reader.string();
+          message.communityPool = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         default:
           reader.skipType(tag & 7);
@@ -206,19 +207,19 @@ export const ExponentialCalculation = {
   typeUrl: "/evmos.inflation.v1.ExponentialCalculation",
   encode(message: ExponentialCalculation, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.a !== "") {
-      writer.uint32(10).string(message.a);
+      writer.uint32(10).string(Decimal.fromUserInput(message.a, 18).atomics);
     }
     if (message.r !== "") {
-      writer.uint32(18).string(message.r);
+      writer.uint32(18).string(Decimal.fromUserInput(message.r, 18).atomics);
     }
     if (message.c !== "") {
-      writer.uint32(26).string(message.c);
+      writer.uint32(26).string(Decimal.fromUserInput(message.c, 18).atomics);
     }
     if (message.bondingTarget !== "") {
-      writer.uint32(34).string(message.bondingTarget);
+      writer.uint32(34).string(Decimal.fromUserInput(message.bondingTarget, 18).atomics);
     }
     if (message.maxVariance !== "") {
-      writer.uint32(42).string(message.maxVariance);
+      writer.uint32(42).string(Decimal.fromUserInput(message.maxVariance, 18).atomics);
     }
     return writer;
   },
@@ -230,19 +231,19 @@ export const ExponentialCalculation = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.a = reader.string();
+          message.a = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 2:
-          message.r = reader.string();
+          message.r = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 3:
-          message.c = reader.string();
+          message.c = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 4:
-          message.bondingTarget = reader.string();
+          message.bondingTarget = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 5:
-          message.maxVariance = reader.string();
+          message.maxVariance = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         default:
           reader.skipType(tag & 7);
