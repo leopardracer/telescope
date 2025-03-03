@@ -48,7 +48,7 @@ const options: TelescopeOptions = {
       useDeepPartial: true,
       num64: "bigint",
       customTypes: {
-        useCosmosSDKDec: false,
+        useCosmosSDKDec: true,
       },
       useTelescopeGeneratedType: true,
       autoFixUndefinedEnumDefault: true,

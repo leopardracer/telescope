@@ -207,7 +207,7 @@ exports[`cosmos/staking/v1beta1 Delegation useCosmosSDKDec 1`] = `
     const obj: any = {};
     obj.delegator_address = message.delegatorAddress === "" ? undefined : message.delegatorAddress;
     obj.validator_address = message.validatorAddress === "" ? undefined : message.validatorAddress;
-    obj.shares = padDecimal(message.shares) === "" ? undefined : padDecimal(message.shares);
+    obj.shares = message.shares === "" ? undefined : Decimal.fromUserInput(message.shares, 18).atomics;
     return obj;
   },
   fromAminoMsg(object: DelegationAminoMsg): Delegation {

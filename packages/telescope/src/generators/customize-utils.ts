@@ -12,6 +12,8 @@ export const plugin = (builder: TelescopeBuilder) => {
     UTILS.fromUtf8 = '@interchainjs/encoding';
     UTILS.toBase64 = '@interchainjs/encoding';
     UTILS.toUtf8 = '@interchainjs/encoding';
+
+    UTILS.Decimal = '@interchainjs/math';
   }
 
   if (
@@ -20,7 +22,11 @@ export const plugin = (builder: TelescopeBuilder) => {
   ) {
     UTILS.Decimal = '__decimals__';
   } else {
-    UTILS.Decimal = '@cosmjs/math';
+    if (builder.options.useInterchainJs) {
+      UTILS.Decimal = '@interchainjs/math';
+    } else {
+      UTILS.Decimal = '@cosmjs/math';
+    }
   }
 
   if (
