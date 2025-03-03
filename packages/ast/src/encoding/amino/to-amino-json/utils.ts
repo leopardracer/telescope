@@ -81,12 +81,22 @@ export const toAmino = {
                     "cosmossdk.io/math.LegacyDec";
 
             if (isCosmosSDKDec) {
-                args.context.addUtil("padDecimal");
+                args.context.addUtil("Decimal");
                 return t.objectProperty(
                     t.identifier(args.context.aminoCaseField(args.field)),
-                    t.callExpression(t.identifier("padDecimal"), [
-                        memberExpressionOrIdentifier(args.scope),
-                    ])
+                    t.memberExpression(
+                        t.callExpression(
+                            t.memberExpression(
+                                t.identifier("Decimal"),
+                                t.identifier("fromUserInput")
+                            ),
+                            [
+                                memberExpressionOrIdentifier(args.scope),
+                                t.numericLiteral(18),
+                            ]
+                        ),
+                        t.identifier("atomics")
+                    )
                 );
             }
         }
@@ -495,9 +505,19 @@ export const arrayTypes = {
     },
 
     stringDec(varname: string, args: ToAminoParseField) {
-        args.context.addUtil("padDecimal");
-        return t.callExpression(t.identifier("padDecimal"), [
-            memberExpressionOrIdentifier([varname]),
-        ]);
+        args.context.addUtil("Decimal");
+        return t.memberExpression(
+            t.callExpression(
+                t.memberExpression(
+                    t.identifier("Decimal"),
+                    t.identifier("fromUserInput")
+                ),
+                [
+                    memberExpressionOrIdentifier([varname]),
+                    t.numericLiteral(18),
+                ]
+            ),
+            t.identifier("atomics")
+        );
     },
 };

@@ -21,5 +21,5 @@ export declare const toAmino: {
 };
 export declare const arrayTypes: {
     long(varname: string): t.CallExpression;
-    stringDec(varname: string, args: ToAminoParseField): t.CallExpression;
+    stringDec(varname: string, args: ToAminoParseField): t.MemberExpression;
 };
