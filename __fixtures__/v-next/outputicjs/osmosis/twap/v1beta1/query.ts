@@ -2,6 +2,7 @@ import { Timestamp } from "../../../google/protobuf/timestamp";
 import { Params, ParamsAmino } from "./genesis";
 import { BinaryReader, BinaryWriter } from "../../../binary";
 import { toTimestamp, fromTimestamp, DeepPartial } from "../../../helpers";
+import { Decimal } from "@interchainjs/math";
 export interface ArithmeticTwapRequest {
   poolId: bigint;
   baseAsset: string;
@@ -224,7 +225,7 @@ export const ArithmeticTwapResponse = {
   aminoType: "osmosis/twap/arithmetic-twap-response",
   encode(message: ArithmeticTwapResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.arithmeticTwap !== "") {
-      writer.uint32(10).string(message.arithmeticTwap);
+      writer.uint32(10).string(Decimal.fromUserInput(message.arithmeticTwap, 18).atomics);
     }
     return writer;
   },
@@ -236,7 +237,7 @@ export const ArithmeticTwapResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.arithmeticTwap = reader.string();
+          message.arithmeticTwap = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         default:
           reader.skipType(tag & 7);
@@ -400,7 +401,7 @@ export const ArithmeticTwapToNowResponse = {
   aminoType: "osmosis/twap/arithmetic-twap-to-now-response",
   encode(message: ArithmeticTwapToNowResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.arithmeticTwap !== "") {
-      writer.uint32(10).string(message.arithmeticTwap);
+      writer.uint32(10).string(Decimal.fromUserInput(message.arithmeticTwap, 18).atomics);
     }
     return writer;
   },
@@ -412,7 +413,7 @@ export const ArithmeticTwapToNowResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.arithmeticTwap = reader.string();
+          message.arithmeticTwap = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         default:
           reader.skipType(tag & 7);

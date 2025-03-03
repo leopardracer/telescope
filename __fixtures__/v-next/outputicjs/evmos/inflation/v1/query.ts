@@ -2,6 +2,7 @@ import { DecCoin, DecCoinAmino } from "../../../cosmos/base/v1beta1/coin";
 import { Params, ParamsAmino } from "./genesis";
 import { BinaryReader, BinaryWriter } from "../../../binary";
 import { DeepPartial } from "../../../helpers";
+import { Decimal } from "@interchainjs/math";
 /** QueryPeriodRequest is the request type for the Query/Period RPC method. */
 export interface QueryPeriodRequest {}
 export interface QueryPeriodRequestProtoMsg {
@@ -741,7 +742,7 @@ export const QueryInflationRateResponse = {
   typeUrl: "/evmos.inflation.v1.QueryInflationRateResponse",
   encode(message: QueryInflationRateResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.inflationRate !== "") {
-      writer.uint32(10).string(message.inflationRate);
+      writer.uint32(10).string(Decimal.fromUserInput(message.inflationRate, 18).atomics);
     }
     return writer;
   },
@@ -753,7 +754,7 @@ export const QueryInflationRateResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.inflationRate = reader.string();
+          message.inflationRate = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         default:
           reader.skipType(tag & 7);

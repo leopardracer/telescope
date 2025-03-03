@@ -1,5 +1,6 @@
 import { Coin, CoinAmino } from "../../../../cosmos/base/v1beta1/coin";
 import { BinaryReader, BinaryWriter } from "../../../../binary";
+import { Decimal } from "@interchainjs/math";
 import { DeepPartial } from "../../../../helpers";
 /**
  * PoolParams defined the parameters that will be managed by the pool
@@ -98,10 +99,10 @@ export const PoolParams = {
   aminoType: "osmosis/gamm/pool-params",
   encode(message: PoolParams, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.swapFee !== "") {
-      writer.uint32(10).string(message.swapFee);
+      writer.uint32(10).string(Decimal.fromUserInput(message.swapFee, 18).atomics);
     }
     if (message.exitFee !== "") {
-      writer.uint32(18).string(message.exitFee);
+      writer.uint32(18).string(Decimal.fromUserInput(message.exitFee, 18).atomics);
     }
     return writer;
   },
@@ -113,10 +114,10 @@ export const PoolParams = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.swapFee = reader.string();
+          message.swapFee = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 2:
-          message.exitFee = reader.string();
+          message.exitFee = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         default:
           reader.skipType(tag & 7);

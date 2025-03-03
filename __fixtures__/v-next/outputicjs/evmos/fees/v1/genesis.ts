@@ -1,6 +1,7 @@
 import { DevFeeInfo, DevFeeInfoAmino } from "./fees";
 import { BinaryReader, BinaryWriter } from "../../../binary";
 import { DeepPartial } from "../../../helpers";
+import { Decimal } from "@interchainjs/math";
 /** GenesisState defines the module's genesis state. */
 export interface GenesisState {
   /** module parameters */
@@ -168,16 +169,16 @@ export const Params = {
       writer.uint32(8).bool(message.enableFees);
     }
     if (message.developerShares !== "") {
-      writer.uint32(18).string(message.developerShares);
+      writer.uint32(18).string(Decimal.fromUserInput(message.developerShares, 18).atomics);
     }
     if (message.validatorShares !== "") {
-      writer.uint32(26).string(message.validatorShares);
+      writer.uint32(26).string(Decimal.fromUserInput(message.validatorShares, 18).atomics);
     }
     if (message.addrDerivationCostCreate !== BigInt(0)) {
       writer.uint32(32).uint64(message.addrDerivationCostCreate);
     }
     if (message.minGasPrice !== "") {
-      writer.uint32(42).string(message.minGasPrice);
+      writer.uint32(42).string(Decimal.fromUserInput(message.minGasPrice, 18).atomics);
     }
     return writer;
   },
@@ -192,16 +193,16 @@ export const Params = {
           message.enableFees = reader.bool();
           break;
         case 2:
-          message.developerShares = reader.string();
+          message.developerShares = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 3:
-          message.validatorShares = reader.string();
+          message.validatorShares = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 4:
           message.addrDerivationCostCreate = reader.uint64();
           break;
         case 5:
-          message.minGasPrice = reader.string();
+          message.minGasPrice = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         default:
           reader.skipType(tag & 7);

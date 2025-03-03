@@ -3,7 +3,7 @@ import { Any, AnySDKType } from "../google/protobuf/any";
 import { Duration, DurationSDKType } from "../google/protobuf/duration";
 import { Timestamp, TimestampSDKType } from "../google/protobuf/timestamp";
 import { BinaryReader, BinaryWriter } from "../binary";
-import { toTimestamp, fromTimestamp, isSet, bytesFromBase64, base64FromBytes, DeepPartial, padDecimal } from "../helpers";
+import { toTimestamp, fromTimestamp, isSet, bytesFromBase64, base64FromBytes, DeepPartial } from "../helpers";
 import { Decimal } from "@cosmjs/math";
 import { JsonSafe } from "../json-safe";
 import { toUtf8, fromBase64, fromUtf8, toBase64 } from "@cosmjs/encoding";
@@ -1392,15 +1392,15 @@ export const EncodingTestForDontOmit = {
     } else {
       obj.d_o_auths = message.dOAuths;
     }
-    obj.dec = padDecimal(message.dec) === "" ? undefined : padDecimal(message.dec);
-    obj.d_o_dec = padDecimal(message.dODec) ?? "";
+    obj.dec = message.dec === "" ? undefined : Decimal.fromUserInput(message.dec, 18).atomics;
+    obj.d_o_dec = Decimal.fromUserInput(message.dODec, 18).atomics ?? "";
     if (message.decs) {
-      obj.decs = message.decs.map(e => padDecimal(e));
+      obj.decs = message.decs.map(e => Decimal.fromUserInput(e, 18).atomics);
     } else {
       obj.decs = message.decs;
     }
     if (message.dODecs) {
-      obj.d_o_decs = message.dODecs.map(e => padDecimal(e));
+      obj.d_o_decs = message.dODecs.map(e => Decimal.fromUserInput(e, 18).atomics);
     } else {
       obj.d_o_decs = message.dODecs;
     }
@@ -2553,15 +2553,15 @@ export const EncodingTestForOmit = {
     } else {
       obj.o_auths = message.oAuths;
     }
-    obj.dec = padDecimal(message.dec) ?? "";
-    obj.o_dec = padDecimal(message.oDec) === "" ? undefined : padDecimal(message.oDec);
+    obj.dec = Decimal.fromUserInput(message.dec, 18).atomics ?? "";
+    obj.o_dec = message.oDec === "" ? undefined : Decimal.fromUserInput(message.oDec, 18).atomics;
     if (message.decs) {
-      obj.decs = message.decs.map(e => padDecimal(e));
+      obj.decs = message.decs.map(e => Decimal.fromUserInput(e, 18).atomics);
     } else {
       obj.decs = message.decs;
     }
     if (message.oDecs) {
-      obj.o_decs = message.oDecs.map(e => padDecimal(e));
+      obj.o_decs = message.oDecs.map(e => Decimal.fromUserInput(e, 18).atomics);
     } else {
       obj.o_decs = message.oDecs;
     }

@@ -1,7 +1,7 @@
-import * as t from '@babel/types';
-import { ProtoType } from '@cosmology/types';
-import { ProtoParseContext } from '../../context';
-import { ToAminoJSONMethod } from './index';
+import * as t from "@babel/types";
+import { ProtoType } from "@cosmology/types";
+import { ProtoParseContext } from "../../context";
+import { ToAminoJSONMethod } from "./index";
 export declare const toAminoJSON: {
     scalar(args: ToAminoJSONMethod, valExpr?: t.Expression): t.ExpressionStatement;
     string(args: ToAminoJSONMethod): t.ExpressionStatement;
@@ -36,7 +36,7 @@ export declare const toAminoJSON: {
 };
 export declare const arrayTypes: {
     scalar(): t.Identifier;
-    string(args: ToAminoJSONMethod): t.Identifier | t.CallExpression;
+    string(args: ToAminoJSONMethod): t.Identifier | t.MemberExpression;
     double(): t.Identifier;
     float(): t.Identifier;
     bool(): t.Identifier;

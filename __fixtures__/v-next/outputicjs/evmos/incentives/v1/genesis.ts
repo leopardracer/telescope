@@ -1,6 +1,7 @@
 import { Incentive, IncentiveAmino, GasMeter, GasMeterAmino } from "./incentives";
 import { BinaryReader, BinaryWriter } from "../../../binary";
 import { DeepPartial } from "../../../helpers";
+import { Decimal } from "@interchainjs/math";
 /** GenesisState defines the module's genesis state. */
 export interface GenesisState {
   /** module parameters */
@@ -163,13 +164,13 @@ export const Params = {
       writer.uint32(8).bool(message.enableIncentives);
     }
     if (message.allocationLimit !== "") {
-      writer.uint32(18).string(message.allocationLimit);
+      writer.uint32(18).string(Decimal.fromUserInput(message.allocationLimit, 18).atomics);
     }
     if (message.incentivesEpochIdentifier !== "") {
       writer.uint32(26).string(message.incentivesEpochIdentifier);
     }
     if (message.rewardScaler !== "") {
-      writer.uint32(34).string(message.rewardScaler);
+      writer.uint32(34).string(Decimal.fromUserInput(message.rewardScaler, 18).atomics);
     }
     return writer;
   },
@@ -184,13 +185,13 @@ export const Params = {
           message.enableIncentives = reader.bool();
           break;
         case 2:
-          message.allocationLimit = reader.string();
+          message.allocationLimit = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 3:
           message.incentivesEpochIdentifier = reader.string();
           break;
         case 4:
-          message.rewardScaler = reader.string();
+          message.rewardScaler = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         default:
           reader.skipType(tag & 7);
