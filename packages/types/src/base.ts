@@ -183,6 +183,10 @@ export interface ProtoRoot {
     package: string;
     imports: string[];
     importNames?: Record<string, Record<string, string>>;
+    options?: {
+      [key: string]: any;
+      "go_package"?: string;
+    };
     root: any;
 };
 

@@ -73,8 +73,12 @@ export const toAmino = {
             "aminoEncoding.customTypes.useCosmosSDKDec"
         );
 
+        const goPackage = args.context.ref.proto.options?.["go_package"];
+
         if (useCosmosSDKDec) {
             const isCosmosSDKDec =
+                (goPackage == "github.com/cosmos/cosmos-sdk/types" &&
+                    args.field.options?.["(gogoproto.customtype)"] == "Dec") ||
                 args.field.options?.["(gogoproto.customtype)"] ==
                     "github.com/cosmos/cosmos-sdk/types.Dec" ||
                 args.field.options?.["(gogoproto.customtype)"] ==
@@ -120,7 +124,11 @@ export const toAmino = {
         );
 
         if (useCosmosSDKDec) {
+            const goPackage = args.context.ref.proto.options?.["go_package"];
+
             const isCosmosSDKDec =
+                (goPackage == "github.com/cosmos/cosmos-sdk/types" &&
+                    args.field.options?.["(gogoproto.customtype)"] == "Dec") ||
                 args.field.options?.["(gogoproto.customtype)"] ==
                     "github.com/cosmos/cosmos-sdk/types.Dec" ||
                 args.field.options?.["(gogoproto.customtype)"] ==
@@ -512,10 +520,7 @@ export const arrayTypes = {
                     t.identifier("Decimal"),
                     t.identifier("fromUserInput")
                 ),
-                [
-                    memberExpressionOrIdentifier([varname]),
-                    t.numericLiteral(18),
-                ]
+                [memberExpressionOrIdentifier([varname]), t.numericLiteral(18)]
             ),
             t.identifier("atomics")
         );

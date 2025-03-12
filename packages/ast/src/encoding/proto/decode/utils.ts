@@ -189,7 +189,11 @@ export const baseTypes = {
         const useCosmosSDKDec = args.context.pluginValue(
           'prototypes.typingsFormat.customTypes.useCosmosSDKDec'
         );
+
+        const goPackage = args.context.ref.proto.options?.['go_package'];
+
         const isCosmosSDKDec =
+            (goPackage == 'github.com/cosmos/cosmos-sdk/types' && args.field.options?.['(gogoproto.customtype)'] == 'Dec') ||
             (args.field.options?.['(gogoproto.customtype)'] ==
                 'github.com/cosmos/cosmos-sdk/types.Dec') ||
             (args.field.options?.['(gogoproto.customtype)'] ==
