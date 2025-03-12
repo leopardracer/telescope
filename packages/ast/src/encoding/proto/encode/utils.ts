@@ -1,106 +1,103 @@
-import * as t from '@babel/types';
-import { EncodeMethod } from './index';
-import { getTagNumber } from '../types';
-import { getKeyTypeEntryName } from '..';
-import { ProtoParseContext } from '../../context';
-import { getDefaultTSTypeFromProtoType } from '../../types';
-import { ProtoField } from '@cosmology/types';
-import { TypeLong } from '../../../utils';
+import * as t from "@babel/types";
+import { EncodeMethod } from "./index";
+import { getTagNumber } from "../types";
+import { getKeyTypeEntryName } from "..";
+import { ProtoParseContext } from "../../context";
+import { getDefaultTSTypeFromProtoType } from "../../types";
+import { ProtoField } from "@cosmology/types";
+import { TypeLong } from "../../../utils";
 
 const notUndefined = (prop: string): t.Expression => {
     return t.binaryExpression(
-        '!==',
-        t.memberExpression(
-            t.identifier('message'),
-            t.identifier(prop)
-        ),
-        t.identifier('undefined')
+        "!==",
+        t.memberExpression(t.identifier("message"), t.identifier(prop)),
+        t.identifier("undefined")
     );
 };
 
 const ifNotUndefined = (prop: string, stmt: t.Statement): t.Statement => {
-    return t.ifStatement(
-        notUndefined(prop),
-        t.blockStatement([
-            stmt
-        ])
-    );
+    return t.ifStatement(notUndefined(prop), t.blockStatement([stmt]));
 };
 
 const notEmptyString = (prop: string): t.Expression => {
-    return t.binaryExpression('!==',
-        t.memberExpression(
-            t.identifier('message'),
-            t.identifier(prop)
-        ),
-        t.stringLiteral('')
-    )
+    return t.binaryExpression(
+        "!==",
+        t.memberExpression(t.identifier("message"), t.identifier(prop)),
+        t.stringLiteral("")
+    );
 };
 
-const nullCheckAndCondition = (inputProp: string, inputExpression: t.Expression): t.Expression => {
-    return t.logicalExpression('&&',
-        t.memberExpression(
-            t.identifier('message'),
-            t.identifier(inputProp)
-        ),
+const nullCheckAndCondition = (
+    inputProp: string,
+    inputExpression: t.Expression
+): t.Expression => {
+    return t.logicalExpression(
+        "&&",
+        t.memberExpression(t.identifier("message"), t.identifier(inputProp)),
         inputExpression
     );
 };
 
 const lengthNotZero = (prop: string): t.Expression => {
     return t.binaryExpression(
-        '!==',
+        "!==",
         t.memberExpression(
-            t.memberExpression(
-                t.identifier('message'),
-                t.identifier(prop)
-            ),
-            t.identifier('length')
+            t.memberExpression(t.identifier("message"), t.identifier(prop)),
+            t.identifier("length")
         ),
         t.numericLiteral(0)
     );
-}
+};
 
 const ifTrue = (prop: string): t.Expression => {
-    return t.binaryExpression('===',
-        t.memberExpression(
-            t.identifier('message'),
-            t.identifier(prop)
-        ),
+    return t.binaryExpression(
+        "===",
+        t.memberExpression(t.identifier("message"), t.identifier(prop)),
         t.booleanLiteral(true)
     );
 };
 
 const notZero = (prop: string): t.Expression => {
-    return t.binaryExpression('!==',
-        t.memberExpression(
-            t.identifier('message'),
-            t.identifier(prop)
-        ),
+    return t.binaryExpression(
+        "!==",
+        t.memberExpression(t.identifier("message"), t.identifier(prop)),
         t.numericLiteral(0)
-    )
+    );
 };
 
 // TODO research, shouldn't we AND these two tests?
-const wrapOptional = (prop: string, test: t.Expression, isOptional: boolean, args?: EncodeMethod) => {
-    if (isOptional || args?.context?.options?.prototypes?.allowEncodeDefaultScalars) {
+const wrapOptional = (
+    prop: string,
+    test: t.Expression,
+    isOptional: boolean,
+    args?: EncodeMethod
+) => {
+    if (
+        isOptional ||
+        args?.context?.options?.prototypes?.allowEncodeDefaultScalars
+    ) {
         return notUndefined(prop);
     }
     return test;
-}
+};
 
-const scalarType = (num: number, prop: string, type: string, args?: EncodeMethod) => {
+const scalarType = (
+    num: number,
+    prop: string,
+    type: string,
+    args?: EncodeMethod
+) => {
     let valueExpression: t.Expression = t.memberExpression(
-        t.identifier('message'),
+        t.identifier("message"),
         t.identifier(prop)
     );
 
     switch (type) {
-        case 'int64':
-        case 'sint64':
-        case 'uint64':
-        case 'fixed64':
-        case 'sfixed64':
+        case "int64":
+        case "sint64":
+        case "uint64":
+        case "fixed64":
+        case "sfixed64":
             TypeLong.addUtil(args.context);
 
             break;
@@ -112,24 +109,34 @@ const scalarType = (num: number, prop: string, type: string, args?: EncodeMethod
                 t.memberExpression(
                     t.callExpression(
                         t.memberExpression(
-                            t.identifier('writer'),
-                            t.identifier('uint32')
+                            t.identifier("writer"),
+                            t.identifier("uint32")
                         ),
-                        [
-                            t.numericLiteral(num)
-                        ]
+                        [t.numericLiteral(num)]
                     ),
                     t.identifier(type)
                 ),
-                [
-                    valueExpression
-                ]
+                [valueExpression]
             )
-        )
+        ),
     ]);
 };
 
-const customType = (num: number, prop: string, type: string, customType: string, args: EncodeMethod) => {
+const customType = (
+    num: number,
+    prop: string,
+    type: string,
+    customType: string,
+    args: EncodeMethod
+) => {
+    const goPackage = args.context.ref.proto.options?.["go_package"];
+    if (
+        goPackage == "github.com/cosmos/cosmos-sdk/types" &&
+        customType == "Dec"
+    ) {
+        customType = `${goPackage}.Dec`;
+    }
+
     switch (customType) {
         case "github.com/cosmos/cosmos-sdk/types.Dec":
         case "cosmossdk.io/math.LegacyDec":
@@ -142,12 +149,10 @@ const customType = (num: number, prop: string, type: string, customType: string,
                         t.memberExpression(
                             t.callExpression(
                                 t.memberExpression(
-                                    t.identifier('writer'),
-                                    t.identifier('uint32')
+                                    t.identifier("writer"),
+                                    t.identifier("uint32")
                                 ),
-                                [
-                                    t.numericLiteral(num)
-                                ]
+                                [t.numericLiteral(num)]
                             ),
                             t.identifier(type)
                         ),
@@ -155,28 +160,27 @@ const customType = (num: number, prop: string, type: string, customType: string,
                             t.memberExpression(
                                 t.callExpression(
                                     t.memberExpression(
-                                        t.identifier('Decimal'),
-                                        t.identifier('fromUserInput'),
+                                        t.identifier("Decimal"),
+                                        t.identifier("fromUserInput")
                                     ),
                                     [
                                         t.memberExpression(
-                                            t.identifier('message'),
+                                            t.identifier("message"),
                                             t.identifier(prop)
                                         ),
-                                        t.numericLiteral(18)
+                                        t.numericLiteral(18),
                                     ]
                                 ),
-                                t.identifier('atomics'),
-                            )
+                                t.identifier("atomics")
+                            ),
                         ]
                     )
-                )
+                ),
             ]);
     }
 };
 
 export const encode = {
-
     string(args: EncodeMethod) {
         const prop = args.field.name;
         const num = getTagNumber(args.field);
@@ -270,17 +274,18 @@ export const encode = {
         if (
             !args.context.options.aminoEncoding.useLegacyInlineEncoding &&
             args.context.options.interfaces.enabled &&
-            args.field.type === 'google.protobuf.Any' &&
-            args.field.options['(cosmos_proto.accepts_interface)']
-
+            args.field.type === "google.protobuf.Any" &&
+            args.field.options["(cosmos_proto.accepts_interface)"]
         ) {
             isAnyType = true;
         }
 
-        const isGlobalRegistry = args.context.options.interfaces?.enabled && args.context.options.interfaces?.useGlobalDecoderRegistry;
+        const isGlobalRegistry =
+            args.context.options.interfaces?.enabled &&
+            args.context.options.interfaces?.useGlobalDecoderRegistry;
 
-        if(isGlobalRegistry){
-          args.context.addUtil("GlobalDecoderRegistry");
+        if (isGlobalRegistry) {
+            args.context.addUtil("GlobalDecoderRegistry");
         }
 
         return types.type(num, prop, name, isAnyType, isGlobalRegistry);
@@ -288,7 +293,13 @@ export const encode = {
 
     enum(args: EncodeMethod) {
         const num = getTagNumber(args.field);
-        return types.enum(args.context, num, args.field, args.isOptional, args.isOneOf);
+        return types.enum(
+            args.context,
+            num,
+            args.field,
+            args.isOptional,
+            args.isOneOf
+        );
     },
 
     bytes(args: EncodeMethod) {
@@ -300,13 +311,15 @@ export const encode = {
     timestamp(args: EncodeMethod) {
         const prop = args.field.name;
         const num = getTagNumber(args.field);
-        const timestampFormat = args.context.pluginValue('prototypes.typingsFormat.timestamp')
+        const timestampFormat = args.context.pluginValue(
+            "prototypes.typingsFormat.timestamp"
+        );
         switch (timestampFormat) {
-            case 'timestamp':
+            case "timestamp":
                 return types.timestamp(num, prop);
-            case 'date':
+            case "date":
             default:
-                args.context.addUtil('toTimestamp');
+                args.context.addUtil("toTimestamp");
                 return types.timestampDate(num, prop);
         }
     },
@@ -314,12 +327,14 @@ export const encode = {
     duration(args: EncodeMethod) {
         const prop = args.field.name;
         const num = getTagNumber(args.field);
-        const durationFormat = args.context.pluginValue('prototypes.typingsFormat.duration');
+        const durationFormat = args.context.pluginValue(
+            "prototypes.typingsFormat.duration"
+        );
         switch (durationFormat) {
-            case 'string':
-                args.context.addUtil('toDuration');
+            case "string":
+                args.context.addUtil("toDuration");
                 return types.duration(num, prop);
-            case 'duration':
+            case "duration":
             default:
                 return encode.type(args);
         }
@@ -346,14 +361,15 @@ export const encode = {
         if (
             !args.context.options.aminoEncoding.useLegacyInlineEncoding &&
             args.context.options.interfaces.enabled &&
-            args.field.type === 'google.protobuf.Any' &&
-            args.field.options['(cosmos_proto.accepts_interface)']
-
+            args.field.type === "google.protobuf.Any" &&
+            args.field.options["(cosmos_proto.accepts_interface)"]
         ) {
             isAnyType = true;
         }
 
-        const isGlobalRegistry = args.context.options.interfaces?.enabled && args.context.options.interfaces?.useGlobalDecoderRegistry;
+        const isGlobalRegistry =
+            args.context.options.interfaces?.enabled &&
+            args.context.options.interfaces?.useGlobalDecoderRegistry;
 
         return types.typeArray(num, prop, name, isAnyType, isGlobalRegistry);
     },
@@ -363,11 +379,10 @@ export const encode = {
         const name = args.typeName;
         const num = getTagNumber(args.field);
         return types.keyHash(num, prop, name);
-    }
+    },
 };
 
 export const types = {
-
     /*
         if (message.sender && message.sender !== "") {
             writer.uint32(10).string(message.sender);
@@ -375,24 +390,37 @@ export const types = {
     */
     string(num: number, prop: string, isOptional: boolean, args: EncodeMethod) {
         const useCosmosSDKDec = args.context.pluginValue(
-            'prototypes.typingsFormat.customTypes.useCosmosSDKDec'
+            "prototypes.typingsFormat.customTypes.useCosmosSDKDec"
         );
+
+        const goPackage = args.context.ref.proto.options?.["go_package"];
+
         const isCosmosSDKDec =
-            (args.field.options?.['(gogoproto.customtype)'] ==
-                'github.com/cosmos/cosmos-sdk/types.Dec') ||
-            (args.field.options?.['(gogoproto.customtype)'] ==
-                'cosmossdk.io/math.LegacyDec');
+            (goPackage == "github.com/cosmos/cosmos-sdk/types" &&
+                args.field.options?.["(gogoproto.customtype)"] == "Dec") ||
+            args.field.options?.["(gogoproto.customtype)"] ==
+                "github.com/cosmos/cosmos-sdk/types.Dec" ||
+            args.field.options?.["(gogoproto.customtype)"] ==
+                "cosmossdk.io/math.LegacyDec";
 
         return t.ifStatement(
             wrapOptional(
                 prop,
-                args.context.pluginValue('prototypes.enforceNullCheck')? nullCheckAndCondition(prop, notEmptyString(prop)) : notEmptyString(prop),
+                args.context.pluginValue("prototypes.enforceNullCheck")
+                    ? nullCheckAndCondition(prop, notEmptyString(prop))
+                    : notEmptyString(prop),
                 isOptional,
                 args
             ),
             useCosmosSDKDec && isCosmosSDKDec
-                ? customType(num, prop, 'string', args.field.options?.['(gogoproto.customtype)'], args)
-                : scalarType(num, prop, 'string')
+                ? customType(
+                      num,
+                      prop,
+                      "string",
+                      args.field.options?.["(gogoproto.customtype)"],
+                      args
+                  )
+                : scalarType(num, prop, "string")
         );
     },
 
@@ -402,16 +430,23 @@ export const types = {
         }
     */
 
-    double(num: number, prop: string, isOptional: boolean, args?: EncodeMethod) {
+    double(
+        num: number,
+        prop: string,
+        isOptional: boolean,
+        args?: EncodeMethod
+    ) {
         return t.ifStatement(
             wrapOptional(
                 prop,
-                args.context.pluginValue('prototypes.enforceNullCheck')? nullCheckAndCondition(prop, notZero(prop)) : notZero(prop),
+                args.context.pluginValue("prototypes.enforceNullCheck")
+                    ? nullCheckAndCondition(prop, notZero(prop))
+                    : notZero(prop),
                 isOptional,
                 args
             ),
-            scalarType(num, prop, 'double')
-        )
+            scalarType(num, prop, "double")
+        );
     },
 
     /*
@@ -424,14 +459,15 @@ export const types = {
         return t.ifStatement(
             wrapOptional(
                 prop,
-                args.context.pluginValue('prototypes.enforceNullCheck')? nullCheckAndCondition(prop, notZero(prop)) : notZero(prop),
+                args.context.pluginValue("prototypes.enforceNullCheck")
+                    ? nullCheckAndCondition(prop, notZero(prop))
+                    : notZero(prop),
                 isOptional,
                 args
             ),
-            scalarType(num, prop, 'float')
-        )
+            scalarType(num, prop, "float")
+        );
     },
-
 
     //   if (message.int32Value && message.int32Value !== 0) {
     //     writer.uint32(24).int32(message.int32Value);
@@ -441,11 +477,13 @@ export const types = {
         return t.ifStatement(
             wrapOptional(
                 prop,
-                args.context.pluginValue('prototypes.enforceNullCheck')? nullCheckAndCondition(prop, notZero(prop)) : notZero(prop),
+                args.context.pluginValue("prototypes.enforceNullCheck")
+                    ? nullCheckAndCondition(prop, notZero(prop))
+                    : notZero(prop),
                 isOptional,
                 args
             ),
-            scalarType(num, prop, 'int32')
+            scalarType(num, prop, "int32")
         );
     },
 
@@ -453,15 +491,22 @@ export const types = {
     //     writer.uint32(24).sint32(message.sint32Value);
     //   }
 
-    sint32(num: number, prop: string, isOptional: boolean, args?: EncodeMethod) {
+    sint32(
+        num: number,
+        prop: string,
+        isOptional: boolean,
+        args?: EncodeMethod
+    ) {
         return t.ifStatement(
             wrapOptional(
                 prop,
-                args.context.pluginValue('prototypes.enforceNullCheck')? nullCheckAndCondition(prop, notZero(prop)) : notZero(prop),
+                args.context.pluginValue("prototypes.enforceNullCheck")
+                    ? nullCheckAndCondition(prop, notZero(prop))
+                    : notZero(prop),
                 isOptional,
                 args
             ),
-            scalarType(num, prop, 'sint32')
+            scalarType(num, prop, "sint32")
         );
     },
 
@@ -469,42 +514,62 @@ export const types = {
     //     writer.uint32(24).uint32(message.int32Value);
     //   }
 
-    uint32(num: number, prop: string, isOptional: boolean, args?: EncodeMethod) {
+    uint32(
+        num: number,
+        prop: string,
+        isOptional: boolean,
+        args?: EncodeMethod
+    ) {
         return t.ifStatement(
             wrapOptional(
                 prop,
-                args.context.pluginValue('prototypes.enforceNullCheck')? nullCheckAndCondition(prop, notZero(prop)) : notZero(prop),
+                args.context.pluginValue("prototypes.enforceNullCheck")
+                    ? nullCheckAndCondition(prop, notZero(prop))
+                    : notZero(prop),
                 isOptional,
                 args
             ),
-            scalarType(num, prop, 'uint32')
+            scalarType(num, prop, "uint32")
         );
     },
 
-    fixed32(num: number, prop: string, isOptional: boolean, args?: EncodeMethod) {
+    fixed32(
+        num: number,
+        prop: string,
+        isOptional: boolean,
+        args?: EncodeMethod
+    ) {
         return t.ifStatement(
             wrapOptional(
                 prop,
-                args.context.pluginValue('prototypes.enforceNullCheck')? nullCheckAndCondition(prop, notZero(prop)) : notZero(prop),
+                args.context.pluginValue("prototypes.enforceNullCheck")
+                    ? nullCheckAndCondition(prop, notZero(prop))
+                    : notZero(prop),
                 isOptional,
                 args
             ),
-            scalarType(num, prop, 'fixed32')
+            scalarType(num, prop, "fixed32")
         );
     },
 
-    sfixed32(num: number, prop: string, isOptional: boolean, args?: EncodeMethod) {
+    sfixed32(
+        num: number,
+        prop: string,
+        isOptional: boolean,
+        args?: EncodeMethod
+    ) {
         return t.ifStatement(
             wrapOptional(
                 prop,
-                args.context.pluginValue('prototypes.enforceNullCheck')? nullCheckAndCondition(prop, notZero(prop)) : notZero(prop),
+                args.context.pluginValue("prototypes.enforceNullCheck")
+                    ? nullCheckAndCondition(prop, notZero(prop))
+                    : notZero(prop),
                 isOptional,
                 args
             ),
-            scalarType(num, prop, 'sfixed32')
+            scalarType(num, prop, "sfixed32")
         );
     },
-
 
     //   if (message.int64Value && !message.int64Value.isZero()) {
     //     writer.uint32(24).int64(message.int64Value);
@@ -514,12 +579,17 @@ export const types = {
         return t.ifStatement(
             wrapOptional(
                 prop,
-                args.context.pluginValue('prototypes.enforceNullCheck')? nullCheckAndCondition(prop, TypeLong.getLongNotZero(prop, args.context)) : TypeLong.getLongNotZero(prop, args.context),
+                args.context.pluginValue("prototypes.enforceNullCheck")
+                    ? nullCheckAndCondition(
+                          prop,
+                          TypeLong.getLongNotZero(prop, args.context)
+                      )
+                    : TypeLong.getLongNotZero(prop, args.context),
                 isOptional,
                 args
             ),
-            scalarType(num, prop, 'int64', args)
-        )
+            scalarType(num, prop, "int64", args)
+        );
     },
 
     //   if (message.sint64Value && !message.sint64Value.isZero()) {
@@ -530,12 +600,17 @@ export const types = {
         return t.ifStatement(
             wrapOptional(
                 prop,
-                args.context.pluginValue('prototypes.enforceNullCheck')? nullCheckAndCondition(prop, TypeLong.getLongNotZero(prop, args.context)) : TypeLong.getLongNotZero(prop, args.context),
+                args.context.pluginValue("prototypes.enforceNullCheck")
+                    ? nullCheckAndCondition(
+                          prop,
+                          TypeLong.getLongNotZero(prop, args.context)
+                      )
+                    : TypeLong.getLongNotZero(prop, args.context),
                 isOptional,
                 args
             ),
-            scalarType(num, prop, 'sint64', args)
-        )
+            scalarType(num, prop, "sint64", args)
+        );
     },
 
     //   if (message.int64Value && !message.int64Value.isZero()) {
@@ -546,36 +621,61 @@ export const types = {
         return t.ifStatement(
             wrapOptional(
                 prop,
-                args.context.pluginValue('prototypes.enforceNullCheck')? nullCheckAndCondition(prop, TypeLong.getLongNotZero(prop, args.context)) : TypeLong.getLongNotZero(prop, args.context),
+                args.context.pluginValue("prototypes.enforceNullCheck")
+                    ? nullCheckAndCondition(
+                          prop,
+                          TypeLong.getLongNotZero(prop, args.context)
+                      )
+                    : TypeLong.getLongNotZero(prop, args.context),
                 isOptional,
                 args
             ),
-            scalarType(num, prop, 'uint64', args)
-        )
+            scalarType(num, prop, "uint64", args)
+        );
     },
 
-    fixed64(num: number, prop: string, isOptional: boolean, args: EncodeMethod) {
+    fixed64(
+        num: number,
+        prop: string,
+        isOptional: boolean,
+        args: EncodeMethod
+    ) {
         return t.ifStatement(
             wrapOptional(
                 prop,
-                args.context.pluginValue('prototypes.enforceNullCheck')? nullCheckAndCondition(prop, TypeLong.getLongNotZero(prop, args.context)) : TypeLong.getLongNotZero(prop, args.context),
+                args.context.pluginValue("prototypes.enforceNullCheck")
+                    ? nullCheckAndCondition(
+                          prop,
+                          TypeLong.getLongNotZero(prop, args.context)
+                      )
+                    : TypeLong.getLongNotZero(prop, args.context),
                 isOptional,
                 args
             ),
-            scalarType(num, prop, 'fixed64', args)
-        )
+            scalarType(num, prop, "fixed64", args)
+        );
     },
 
-    sfixed64(num: number, prop: string, isOptional: boolean, args: EncodeMethod) {
+    sfixed64(
+        num: number,
+        prop: string,
+        isOptional: boolean,
+        args: EncodeMethod
+    ) {
         return t.ifStatement(
             wrapOptional(
                 prop,
-                args.context.pluginValue('prototypes.enforceNullCheck')? nullCheckAndCondition(prop, TypeLong.getLongNotZero(prop, args.context)) : TypeLong.getLongNotZero(prop, args.context),
+                args.context.pluginValue("prototypes.enforceNullCheck")
+                    ? nullCheckAndCondition(
+                          prop,
+                          TypeLong.getLongNotZero(prop, args.context)
+                      )
+                    : TypeLong.getLongNotZero(prop, args.context),
                 isOptional,
                 args
             ),
-            scalarType(num, prop, 'sfixed64', args)
-        )
+            scalarType(num, prop, "sfixed64", args)
+        );
     },
 
     //   if (message.disableMacros === true) {
@@ -583,33 +683,42 @@ export const types = {
     //   }
 
     bool(num: number, prop: string, isOptional: boolean, args?: EncodeMethod) {
-
         return t.ifStatement(
             wrapOptional(prop, ifTrue(prop), isOptional, args),
-            scalarType(num, prop, 'bool')
-        )
+            scalarType(num, prop, "bool")
+        );
     },
 
-    type(num: number, prop: string, name: string, isAnyType: boolean, isGlobalRegistry: boolean) {
-
-        let messageProp: t.MemberExpression | t.TSAsExpression | t.CallExpression = t.memberExpression(
-            t.identifier('message'),
+    type(
+        num: number,
+        prop: string,
+        name: string,
+        isAnyType: boolean,
+        isGlobalRegistry: boolean
+    ) {
+        let messageProp:
+            | t.MemberExpression
+            | t.TSAsExpression
+            | t.CallExpression = t.memberExpression(
+            t.identifier("message"),
             t.identifier(prop)
         );
 
         if (isAnyType) {
-          if(isGlobalRegistry){
-            messageProp = t.callExpression(t.memberExpression(t.identifier("GlobalDecoderRegistry"), t.identifier("wrapAny")),[
-              messageProp
-            ])
-          } else {
-            messageProp = t.tsAsExpression(
-                messageProp,
-                t.tsTypeReference(
-                    t.identifier('Any')
-                )
-            )
-          }
+            if (isGlobalRegistry) {
+                messageProp = t.callExpression(
+                    t.memberExpression(
+                        t.identifier("GlobalDecoderRegistry"),
+                        t.identifier("wrapAny")
+                    ),
+                    [messageProp]
+                );
+            } else {
+                messageProp = t.tsAsExpression(
+                    messageProp,
+                    t.tsTypeReference(t.identifier("Any"))
+                );
+            }
         }
 
         return t.ifStatement(
@@ -621,7 +730,7 @@ export const types = {
                             t.callExpression(
                                 t.memberExpression(
                                     t.identifier(name),
-                                    t.identifier('encode')
+                                    t.identifier("encode")
                                 ),
                                 [
                                     messageProp,
@@ -629,25 +738,22 @@ export const types = {
                                         t.memberExpression(
                                             t.callExpression(
                                                 t.memberExpression(
-                                                    t.identifier('writer'),
-                                                    t.identifier('uint32')
+                                                    t.identifier("writer"),
+                                                    t.identifier("uint32")
                                                 ),
-                                                [
-                                                    t.numericLiteral(num)
-                                                ]
+                                                [t.numericLiteral(num)]
                                             ),
-                                            t.identifier('fork')
+                                            t.identifier("fork")
                                         ),
                                         []
-                                    )
-
+                                    ),
                                 ]
                             ),
-                            t.identifier('ldelim')
+                            t.identifier("ldelim")
                         ),
                         []
                     )
-                )
+                ),
             ])
         );
     },
@@ -656,20 +762,29 @@ export const types = {
     //     writer.uint32(24).int32(message.singleField);
     //   }
 
-    enum(context: ProtoParseContext, num: number, field: ProtoField, isOptional: boolean, isOneOf: boolean) {
+    enum(
+        context: ProtoParseContext,
+        num: number,
+        field: ProtoField,
+        isOptional: boolean,
+        isOneOf: boolean
+    ) {
         const prop = field.name;
         return t.ifStatement(
-            wrapOptional(prop,
-                t.binaryExpression('!==',
+            wrapOptional(
+                prop,
+                t.binaryExpression(
+                    "!==",
                     t.memberExpression(
-                        t.identifier('message'),
+                        t.identifier("message"),
                         t.identifier(field.name)
                     ),
                     getDefaultTSTypeFromProtoType(context, field, isOneOf)
-                )
-                , isOptional),
-            scalarType(num, prop, 'int32')
-        )
+                ),
+                isOptional
+            ),
+            scalarType(num, prop, "int32")
+        );
     },
 
     /*
@@ -678,11 +793,10 @@ export const types = {
     }
     */
 
-
     bytes(num: number, prop: string, isOptional: boolean) {
         return t.ifStatement(
             wrapOptional(prop, lengthNotZero(prop), isOptional),
-            scalarType(num, prop, 'bytes')
+            scalarType(num, prop, "bytes")
         );
     },
 
@@ -698,32 +812,30 @@ export const types = {
                     t.memberExpression(
                         t.callExpression(
                             t.memberExpression(
-                                t.identifier('Timestamp'),
-                                t.identifier('encode')
+                                t.identifier("Timestamp"),
+                                t.identifier("encode")
                             ),
                             [
                                 t.memberExpression(
-                                    t.identifier('message'),
+                                    t.identifier("message"),
                                     t.identifier(prop)
                                 ),
                                 t.callExpression(
                                     t.memberExpression(
                                         t.callExpression(
                                             t.memberExpression(
-                                                t.identifier('writer'),
-                                                t.identifier('uint32')
+                                                t.identifier("writer"),
+                                                t.identifier("uint32")
                                             ),
-                                            [
-                                                t.numericLiteral(num)
-                                            ]
+                                            [t.numericLiteral(num)]
                                         ),
-                                        t.identifier('fork')
+                                        t.identifier("fork")
                                     ),
                                     []
-                                )
+                                ),
                             ]
                         ),
-                        t.identifier('ldelim')
+                        t.identifier("ldelim")
                     ),
                     []
                 )
@@ -732,46 +844,44 @@ export const types = {
     },
 
     timestampDate(num: number, prop: string) {
-        return ifNotUndefined(prop, t.expressionStatement(
-            t.callExpression(
-                t.memberExpression(
-                    t.callExpression(
-                        t.memberExpression(
-                            t.identifier('Timestamp'),
-                            t.identifier('encode')
-                        ),
-                        [
-                            t.callExpression(
-                                t.identifier('toTimestamp'),
-                                [
-                                    t.memberExpression(
-                                        t.identifier('message'),
-                                        t.identifier(prop)
-                                    )
-                                ]
+        return ifNotUndefined(
+            prop,
+            t.expressionStatement(
+                t.callExpression(
+                    t.memberExpression(
+                        t.callExpression(
+                            t.memberExpression(
+                                t.identifier("Timestamp"),
+                                t.identifier("encode")
                             ),
-                            t.callExpression(
-                                t.memberExpression(
-                                    t.callExpression(
-                                        t.memberExpression(
-                                            t.identifier('writer'),
-                                            t.identifier('uint32')
-                                        ),
-                                        [
-                                            t.numericLiteral(num)
-                                        ]
+                            [
+                                t.callExpression(t.identifier("toTimestamp"), [
+                                    t.memberExpression(
+                                        t.identifier("message"),
+                                        t.identifier(prop)
                                     ),
-                                    t.identifier('fork')
+                                ]),
+                                t.callExpression(
+                                    t.memberExpression(
+                                        t.callExpression(
+                                            t.memberExpression(
+                                                t.identifier("writer"),
+                                                t.identifier("uint32")
+                                            ),
+                                            [t.numericLiteral(num)]
+                                        ),
+                                        t.identifier("fork")
+                                    ),
+                                    []
                                 ),
-                                []
-                            )
-                        ]
+                            ]
+                        ),
+                        t.identifier("ldelim")
                     ),
-                    t.identifier('ldelim')
-                ),
-                []
+                    []
+                )
             )
-        ));
+        );
     },
 
     // if (message.period !== undefined) {
@@ -787,41 +897,39 @@ export const types = {
                         t.memberExpression(
                             t.callExpression(
                                 t.memberExpression(
-                                    t.identifier('Duration'),
-                                    t.identifier('encode')
+                                    t.identifier("Duration"),
+                                    t.identifier("encode")
                                 ),
                                 [
                                     t.callExpression(
-                                        t.identifier('toDuration'),
+                                        t.identifier("toDuration"),
                                         [
                                             t.memberExpression(
-                                                t.identifier('message'),
+                                                t.identifier("message"),
                                                 t.identifier(prop)
-                                            )
+                                            ),
                                         ]
                                     ),
                                     t.callExpression(
                                         t.memberExpression(
                                             t.callExpression(
                                                 t.memberExpression(
-                                                    t.identifier('writer'),
-                                                    t.identifier('uint32')
+                                                    t.identifier("writer"),
+                                                    t.identifier("uint32")
                                                 ),
-                                                [
-                                                    t.numericLiteral(num)
-                                                ]
+                                                [t.numericLiteral(num)]
                                             ),
-                                            t.identifier('fork')
+                                            t.identifier("fork")
                                         ),
                                         []
-                                    )
+                                    ),
                                 ]
                             ),
-                            t.identifier('ldelim')
+                            t.identifier("ldelim")
                         ),
                         []
                     )
-                )
+                ),
             ])
         );
     },
@@ -843,144 +951,117 @@ export const types = {
                     t.memberExpression(
                         t.callExpression(
                             t.memberExpression(
-                                t.identifier('writer'),
-                                t.identifier('uint32')
+                                t.identifier("writer"),
+                                t.identifier("uint32")
                             ),
-                            [
-                                t.numericLiteral(num)
-                            ]
+                            [t.numericLiteral(num)]
                         ),
-                        t.identifier('fork')
+                        t.identifier("fork")
                     ),
                     []
                 )
             ),
             t.forOfStatement(
-                t.variableDeclaration(
-                    'const',
-                    [
-                        t.variableDeclarator(
-                            t.identifier('v'),
-                            null
-                        )
-                    ]
-                ),
-                t.memberExpression(
-                    t.identifier('message'),
-                    t.identifier(prop)
-                ),
-                t.blockStatement([
-                    expr
-                ])
+                t.variableDeclaration("const", [
+                    t.variableDeclarator(t.identifier("v"), null),
+                ]),
+                t.memberExpression(t.identifier("message"), t.identifier(prop)),
+                t.blockStatement([expr])
             ),
             t.expressionStatement(
                 t.callExpression(
                     t.memberExpression(
-                        t.identifier('writer'),
-                        t.identifier('ldelim')
+                        t.identifier("writer"),
+                        t.identifier("ldelim")
                     ),
                     []
                 )
-            )
+            ),
         ];
     },
 
     array(num: number, prop: string, expr: t.Statement) {
         return [
             t.forOfStatement(
-                t.variableDeclaration(
-                    'const',
-                    [
-                        t.variableDeclarator(
-                            t.identifier('v'),
-                            null
-                        )
-                    ]
-                ),
-                t.memberExpression(
-                    t.identifier('message'),
-                    t.identifier(prop)
-                ),
-                t.blockStatement([
-                    expr
-                ])
-            )
+                t.variableDeclaration("const", [
+                    t.variableDeclarator(t.identifier("v"), null),
+                ]),
+                t.memberExpression(t.identifier("message"), t.identifier(prop)),
+                t.blockStatement([expr])
+            ),
         ];
     },
 
-    typeArray(num: number, prop: string, name: string, isAnyType: boolean, isGlobalRegistry: boolean) {
+    typeArray(
+        num: number,
+        prop: string,
+        name: string,
+        isAnyType: boolean,
+        isGlobalRegistry: boolean
+    ) {
         // "v!" just means it's NOT NULLABLE
-        let nestedProp: t.TSNonNullExpression | t.TSAsExpression | t.CallExpression = t.tsNonNullExpression(
-            t.identifier('v')
-        );
+        let nestedProp:
+            | t.TSNonNullExpression
+            | t.TSAsExpression
+            | t.CallExpression = t.tsNonNullExpression(t.identifier("v"));
 
         if (isAnyType) {
-            if(isGlobalRegistry){
-              nestedProp = t.callExpression(t.memberExpression(t.identifier("GlobalDecoderRegistry"), t.identifier("wrapAny")),[
-                nestedProp
-              ])
+            if (isGlobalRegistry) {
+                nestedProp = t.callExpression(
+                    t.memberExpression(
+                        t.identifier("GlobalDecoderRegistry"),
+                        t.identifier("wrapAny")
+                    ),
+                    [nestedProp]
+                );
             } else {
-              nestedProp = t.tsAsExpression(
-                  nestedProp,
-                  t.tsTypeReference(
-                      t.identifier('Any')
-                  )
-              )
+                nestedProp = t.tsAsExpression(
+                    nestedProp,
+                    t.tsTypeReference(t.identifier("Any"))
+                );
             }
         }
 
-
         return [
             t.forOfStatement(
-                t.variableDeclaration('const',
-                    [
-                        t.variableDeclarator(
-                            t.identifier('v'),
-                            null
-                        )
-                    ]
-                ),
-                t.memberExpression(
-                    t.identifier('message'),
-                    t.identifier(prop)
-                ),
-                t.blockStatement(
-                    [
-                        t.expressionStatement(
-                            t.callExpression(
-                                t.memberExpression(
-                                    t.callExpression(
-                                        t.memberExpression(
-                                            t.identifier(name),
-                                            t.identifier('encode')
-                                        ),
-                                        [
-                                            nestedProp,
-                                            t.callExpression(
-                                                t.memberExpression(
-                                                    t.callExpression(
-                                                        t.memberExpression(
-                                                            t.identifier('writer'),
-                                                            t.identifier('uint32')
-                                                        ),
-                                                        [
-                                                            t.numericLiteral(num)
-                                                        ]
-                                                    ),
-                                                    t.identifier('fork')
-                                                ),
-                                                []
-                                            )
-                                        ]
+                t.variableDeclaration("const", [
+                    t.variableDeclarator(t.identifier("v"), null),
+                ]),
+                t.memberExpression(t.identifier("message"), t.identifier(prop)),
+                t.blockStatement([
+                    t.expressionStatement(
+                        t.callExpression(
+                            t.memberExpression(
+                                t.callExpression(
+                                    t.memberExpression(
+                                        t.identifier(name),
+                                        t.identifier("encode")
                                     ),
-                                    t.identifier('ldelim')
+                                    [
+                                        nestedProp,
+                                        t.callExpression(
+                                            t.memberExpression(
+                                                t.callExpression(
+                                                    t.memberExpression(
+                                                        t.identifier("writer"),
+                                                        t.identifier("uint32")
+                                                    ),
+                                                    [t.numericLiteral(num)]
+                                                ),
+                                                t.identifier("fork")
+                                            ),
+                                            []
+                                        ),
+                                    ]
                                 ),
-                                []
-                            )
+                                t.identifier("ldelim")
+                            ),
+                            []
                         )
-                    ]
-                )
-            )];
+                    ),
+                ])
+            ),
+        ];
     },
 
     // Object.entries(message.labels).forEach(([key, value]) => {
@@ -996,26 +1077,25 @@ export const types = {
                 t.memberExpression(
                     t.callExpression(
                         t.memberExpression(
-                            t.identifier('Object'),
-                            t.identifier('entries')
+                            t.identifier("Object"),
+                            t.identifier("entries")
                         ),
                         [
                             t.memberExpression(
-                                t.identifier('message'),
+                                t.identifier("message"),
                                 t.identifier(prop)
-                            )
+                            ),
                         ]
                     ),
-                    t.identifier('forEach')
+                    t.identifier("forEach")
                 ),
                 [
                     t.arrowFunctionExpression(
                         [
                             t.arrayPattern([
-                                t.identifier('key'),
-                                t.identifier('value')
-                            ]
-                            ),
+                                t.identifier("key"),
+                                t.identifier("value"),
+                            ]),
                         ],
                         t.blockStatement([
                             t.expressionStatement(
@@ -1023,55 +1103,64 @@ export const types = {
                                     t.memberExpression(
                                         t.callExpression(
                                             t.memberExpression(
-                                                t.identifier(getKeyTypeEntryName(name, prop)),
-                                                t.identifier('encode')
+                                                t.identifier(
+                                                    getKeyTypeEntryName(
+                                                        name,
+                                                        prop
+                                                    )
+                                                ),
+                                                t.identifier("encode")
                                             ),
                                             [
-                                                t.objectExpression(
-                                                    [
-                                                        t.objectProperty(
-                                                            t.identifier('key'),
-                                                            t.tsAsExpression(
-                                                                t.identifier('key'),
-                                                                t.tsAnyKeyword()
-                                                            )
-                                                        ),
-                                                        t.objectProperty(
-                                                            t.identifier('value'),
-                                                            t.identifier('value'),
-                                                            false,
-                                                            true
+                                                t.objectExpression([
+                                                    t.objectProperty(
+                                                        t.identifier("key"),
+                                                        t.tsAsExpression(
+                                                            t.identifier("key"),
+                                                            t.tsAnyKeyword()
                                                         )
-                                                    ]
-                                                ),
+                                                    ),
+                                                    t.objectProperty(
+                                                        t.identifier("value"),
+                                                        t.identifier("value"),
+                                                        false,
+                                                        true
+                                                    ),
+                                                ]),
                                                 t.callExpression(
                                                     t.memberExpression(
                                                         t.callExpression(
                                                             t.memberExpression(
-                                                                t.identifier('writer'),
-                                                                t.identifier('uint32')
+                                                                t.identifier(
+                                                                    "writer"
+                                                                ),
+                                                                t.identifier(
+                                                                    "uint32"
+                                                                )
                                                             ),
                                                             [
-                                                                t.numericLiteral(num)
+                                                                t.numericLiteral(
+                                                                    num
+                                                                ),
                                                             ]
                                                         ),
-                                                        t.identifier('fork')
+                                                        t.identifier("fork")
                                                     ),
                                                     []
-                                                )
+                                                ),
                                             ]
                                         ),
-                                        t.identifier('ldelim')
+                                        t.identifier("ldelim")
                                     ),
                                     []
                                 )
-                            )
+                            ),
                         ])
-                    )
+                    ),
                 ]
             )
-        )
-    }
+        );
+    },
 };
 
 export const arrayTypes = {
@@ -1079,12 +1168,10 @@ export const arrayTypes = {
         return t.expressionStatement(
             t.callExpression(
                 t.memberExpression(
-                    t.identifier('writer'),
-                    t.identifier('double')
+                    t.identifier("writer"),
+                    t.identifier("double")
                 ),
-                [
-                    t.identifier('v')
-                ]
+                [t.identifier("v")]
             )
         );
     },
@@ -1092,12 +1179,10 @@ export const arrayTypes = {
         return t.expressionStatement(
             t.callExpression(
                 t.memberExpression(
-                    t.identifier('writer'),
-                    t.identifier('bool')
+                    t.identifier("writer"),
+                    t.identifier("bool")
                 ),
-                [
-                    t.identifier('v')
-                ]
+                [t.identifier("v")]
             )
         );
     },
@@ -1105,12 +1190,10 @@ export const arrayTypes = {
         return t.expressionStatement(
             t.callExpression(
                 t.memberExpression(
-                    t.identifier('writer'),
-                    t.identifier('float')
+                    t.identifier("writer"),
+                    t.identifier("float")
                 ),
-                [
-                    t.identifier('v')
-                ]
+                [t.identifier("v")]
             )
         );
     },
@@ -1118,12 +1201,10 @@ export const arrayTypes = {
         return t.expressionStatement(
             t.callExpression(
                 t.memberExpression(
-                    t.identifier('writer'),
-                    t.identifier('int32')
+                    t.identifier("writer"),
+                    t.identifier("int32")
                 ),
-                [
-                    t.identifier('v')
-                ]
+                [t.identifier("v")]
             )
         );
     },
@@ -1131,12 +1212,10 @@ export const arrayTypes = {
         return t.expressionStatement(
             t.callExpression(
                 t.memberExpression(
-                    t.identifier('writer'),
-                    t.identifier('sint32')
+                    t.identifier("writer"),
+                    t.identifier("sint32")
                 ),
-                [
-                    t.identifier('v')
-                ]
+                [t.identifier("v")]
             )
         );
     },
@@ -1144,12 +1223,10 @@ export const arrayTypes = {
         return t.expressionStatement(
             t.callExpression(
                 t.memberExpression(
-                    t.identifier('writer'),
-                    t.identifier('uint32')
+                    t.identifier("writer"),
+                    t.identifier("uint32")
                 ),
-                [
-                    t.identifier('v')
-                ]
+                [t.identifier("v")]
             )
         );
     },
@@ -1157,12 +1234,10 @@ export const arrayTypes = {
         return t.expressionStatement(
             t.callExpression(
                 t.memberExpression(
-                    t.identifier('writer'),
-                    t.identifier('fixed32')
+                    t.identifier("writer"),
+                    t.identifier("fixed32")
                 ),
-                [
-                    t.identifier('v')
-                ]
+                [t.identifier("v")]
             )
         );
     },
@@ -1170,74 +1245,72 @@ export const arrayTypes = {
         return t.expressionStatement(
             t.callExpression(
                 t.memberExpression(
-                    t.identifier('writer'),
-                    t.identifier('sfixed32')
+                    t.identifier("writer"),
+                    t.identifier("sfixed32")
                 ),
-                [
-                    t.identifier('v')
-                ]
+                [t.identifier("v")]
             )
         );
     },
     long(type: string, args: EncodeMethod) {
-        let valueExpression: t.Expression = t.identifier('v');
+        let valueExpression: t.Expression = t.identifier("v");
 
         return t.expressionStatement(
             t.callExpression(
-                t.memberExpression(
-                    t.identifier('writer'),
-                    t.identifier(type)
-                ),
-                [
-                    valueExpression
-                ]
+                t.memberExpression(t.identifier("writer"), t.identifier(type)),
+                [valueExpression]
             )
         );
     },
     int64(args: EncodeMethod) {
-        return arrayTypes.long('int64', args);
+        return arrayTypes.long("int64", args);
     },
     sint64(args: EncodeMethod) {
-        return arrayTypes.long('sint64', args);
+        return arrayTypes.long("sint64", args);
     },
     uint64(args: EncodeMethod) {
-        return arrayTypes.long('uint64', args);
+        return arrayTypes.long("uint64", args);
     },
     fixed64(args: EncodeMethod) {
-        return arrayTypes.long('fixed64', args);
+        return arrayTypes.long("fixed64", args);
     },
     sfixed64(args: EncodeMethod) {
-        return arrayTypes.long('sfixed64', args);
+        return arrayTypes.long("sfixed64", args);
     },
     string(args: EncodeMethod) {
         const useCosmosSDKDec = args.context.pluginValue(
-            'prototypes.typingsFormat.customTypes.useCosmosSDKDec'
+            "prototypes.typingsFormat.customTypes.useCosmosSDKDec"
         );
+
+        const goPackage = args.context.ref.proto.options?.["go_package"];
+
         const isCosmosSDKDec =
-            (args.field.options?.['(gogoproto.customtype)'] ==
-                'github.com/cosmos/cosmos-sdk/types.Dec') ||
-            (args.field.options?.['(gogoproto.customtype)'] ==
-                'cosmossdk.io/math.LegacyDec');
+            (goPackage == "github.com/cosmos/cosmos-sdk/types" &&
+                args.field.options?.["(gogoproto.customtype)"] == "Dec") ||
+            args.field.options?.["(gogoproto.customtype)"] ==
+                "github.com/cosmos/cosmos-sdk/types.Dec" ||
+            args.field.options?.["(gogoproto.customtype)"] ==
+                "cosmossdk.io/math.LegacyDec";
 
         const num = getTagNumber(args.field);
 
-        let valueExpression: t.Expression = t.tsNonNullExpression(t.identifier('v'));
+        let valueExpression: t.Expression = t.tsNonNullExpression(
+            t.identifier("v")
+        );
 
         if (useCosmosSDKDec && isCosmosSDKDec) {
             args.context.addUtil("Decimal");
 
-            valueExpression = t.memberExpression(t.callExpression(
-                t.memberExpression(
-                    t.identifier('Decimal'),
-                    t.identifier('fromUserInput'),
+            valueExpression = t.memberExpression(
+                t.callExpression(
+                    t.memberExpression(
+                        t.identifier("Decimal"),
+                        t.identifier("fromUserInput")
+                    ),
+                    [valueExpression, t.numericLiteral(18)]
                 ),
-                [
-                    valueExpression,
-                    t.numericLiteral(18)
-                ]
-            ),
-                t.identifier('atomics'),
-            )
+                t.identifier("atomics")
+            );
         }
 
         return t.expressionStatement(
@@ -1245,18 +1318,14 @@ export const arrayTypes = {
                 t.memberExpression(
                     t.callExpression(
                         t.memberExpression(
-                            t.identifier('writer'),
-                            t.identifier('uint32')
+                            t.identifier("writer"),
+                            t.identifier("uint32")
                         ),
-                        [
-                            t.numericLiteral(num)
-                        ]
+                        [t.numericLiteral(num)]
                     ),
-                    t.identifier('string')
+                    t.identifier("string")
                 ),
-                [
-                    valueExpression
-                ]
+                [valueExpression]
             )
         );
     },
@@ -1268,24 +1337,18 @@ export const arrayTypes = {
                 t.memberExpression(
                     t.callExpression(
                         t.memberExpression(
-                            t.identifier('writer'),
-                            t.identifier('uint32')
+                            t.identifier("writer"),
+                            t.identifier("uint32")
                         ),
-                        [
-                            t.numericLiteral(num)
-                        ]
+                        [t.numericLiteral(num)]
                     ),
-                    t.identifier('bytes')
+                    t.identifier("bytes")
                 ),
-                [
-                    t.tsNonNullExpression(t.identifier('v'))
-                ]
+                [t.tsNonNullExpression(t.identifier("v"))]
             )
         );
     },
     enum() {
         return arrayTypes.int32();
-    }
-
+    },
 };
-

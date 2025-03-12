@@ -1,5 +1,5 @@
-import { TraversedProtoRoot, ProtoRef, TraverseImport, TraverseAccept, TraverseImplement, TraverseExport, TraverseImportNames, TraversalSymbol } from '@cosmology/types';
-import { ProtoStore } from './store';
+import { TraversedProtoRoot, ProtoRef, TraverseImport, TraverseAccept, TraverseImplement, TraverseExport, TraverseImportNames, TraversalSymbol } from "@cosmology/types";
+import { ProtoStore } from "./store";
 export interface TraverseContext {
     imports: TraverseImport;
     acceptsInterface: TraverseAccept;

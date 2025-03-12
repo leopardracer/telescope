@@ -9,6 +9,8 @@ import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 import "misc/nest.proto";
 
+option go_package = "github.com/cosmos/cosmos-sdk/types";
+
 message EvalRequest {
   // Bindings for the external variables.  The types SHOULD be compatible
   // with the type environment in [CheckRequest][google.api.expr.conformance.v1alpha1.CheckRequest], if checked.
