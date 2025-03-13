@@ -179,7 +179,8 @@ export const plugin = (builder: TelescopeBuilder) => {
   if (
     builder.options.prototypes?.typingsFormat?.useTelescopeGeneratedType ||
     (builder.options.interfaces?.enabled &&
-      (builder.options.interfaces?.useGlobalDecoderRegistry || builder.options.helperFunctions?.useGlobalDecoderRegistry))
+      (builder.options.interfaces?.useGlobalDecoderRegistry || builder.options.helperFunctions?.useGlobalDecoderRegistry)) ||
+    builder.options.helperFunctions?.enabled
   ) {
     builder.files.push("types.ts");
     write(builder, "types.ts", getTypesHelper(builder.options));
