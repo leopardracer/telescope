@@ -15,12 +15,14 @@ import {
 import {
   ITxArgs,
   ISigningClient,
-  StdFee,
-  DeliverTxResponse,
   SigningClientResolver,
   RpcResolver,
   isISigningClient
 } from './helper-func-types'
+import {
+  StdFee,
+  DeliverTxResponse,
+} from './types'
 import {
     useQuery,
     useQueryClient,
