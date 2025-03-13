@@ -10,12 +10,14 @@ import {
 import {
   ITxArgs,
   ISigningClient,
-  StdFee,
-  DeliverTxResponse,
   SigningClientResolver,
   RpcResolver,
   isISigningClient
 } from './helper-func-types${options.restoreImportExtension ?? ""}'
+import {
+  StdFee,
+  DeliverTxResponse,
+} from './types${options.restoreImportExtension ?? ""}'
 import {
     useQuery,
     useQueryClient,
