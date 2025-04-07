@@ -1,107 +1,92 @@
-import { RpcResolver, buildQuery } from "../../helper-func-types";
+import { buildQuery } from "../../helper-func-types";
 import { RequestEcho, ResponseEcho, RequestFlush, ResponseFlush, RequestInfo, ResponseInfo, RequestSetOption, ResponseSetOption, RequestDeliverTx, ResponseDeliverTx, RequestCheckTx, ResponseCheckTx, RequestQuery, ResponseQuery, RequestCommit, ResponseCommit, RequestInitChain, ResponseInitChain, RequestBeginBlock, ResponseBeginBlock, RequestEndBlock, ResponseEndBlock, RequestListSnapshots, ResponseListSnapshots, RequestOfferSnapshot, ResponseOfferSnapshot, RequestLoadSnapshotChunk, ResponseLoadSnapshotChunk, RequestApplySnapshotChunk, ResponseApplySnapshotChunk } from "./types";
-export const createGetEcho = (clientResolver?: RpcResolver) => buildQuery<RequestEcho, ResponseEcho>({
+export const getEcho = buildQuery<RequestEcho, ResponseEcho>({
   encode: RequestEcho.encode,
   decode: ResponseEcho.decode,
   service: "tendermint.abci.ABCIApplication",
-  method: "Echo",
-  clientResolver
+  method: "Echo"
 });
-export const createGetFlush = (clientResolver?: RpcResolver) => buildQuery<RequestFlush, ResponseFlush>({
+export const getFlush = buildQuery<RequestFlush, ResponseFlush>({
   encode: RequestFlush.encode,
   decode: ResponseFlush.decode,
   service: "tendermint.abci.ABCIApplication",
-  method: "Flush",
-  clientResolver
+  method: "Flush"
 });
-export const createGetInfo = (clientResolver?: RpcResolver) => buildQuery<RequestInfo, ResponseInfo>({
+export const getInfo = buildQuery<RequestInfo, ResponseInfo>({
   encode: RequestInfo.encode,
   decode: ResponseInfo.decode,
   service: "tendermint.abci.ABCIApplication",
-  method: "Info",
-  clientResolver
+  method: "Info"
 });
-export const createGetSetOption = (clientResolver?: RpcResolver) => buildQuery<RequestSetOption, ResponseSetOption>({
+export const getSetOption = buildQuery<RequestSetOption, ResponseSetOption>({
   encode: RequestSetOption.encode,
   decode: ResponseSetOption.decode,
   service: "tendermint.abci.ABCIApplication",
-  method: "SetOption",
-  clientResolver
+  method: "SetOption"
 });
-export const createGetDeliverTx = (clientResolver?: RpcResolver) => buildQuery<RequestDeliverTx, ResponseDeliverTx>({
+export const getDeliverTx = buildQuery<RequestDeliverTx, ResponseDeliverTx>({
   encode: RequestDeliverTx.encode,
   decode: ResponseDeliverTx.decode,
   service: "tendermint.abci.ABCIApplication",
-  method: "DeliverTx",
-  clientResolver
+  method: "DeliverTx"
 });
-export const createGetCheckTx = (clientResolver?: RpcResolver) => buildQuery<RequestCheckTx, ResponseCheckTx>({
+export const getCheckTx = buildQuery<RequestCheckTx, ResponseCheckTx>({
   encode: RequestCheckTx.encode,
   decode: ResponseCheckTx.decode,
   service: "tendermint.abci.ABCIApplication",
-  method: "CheckTx",
-  clientResolver
+  method: "CheckTx"
 });
-export const createGetQuery = (clientResolver?: RpcResolver) => buildQuery<RequestQuery, ResponseQuery>({
+export const getQuery = buildQuery<RequestQuery, ResponseQuery>({
   encode: RequestQuery.encode,
   decode: ResponseQuery.decode,
   service: "tendermint.abci.ABCIApplication",
-  method: "Query",
-  clientResolver
+  method: "Query"
 });
-export const createGetCommit = (clientResolver?: RpcResolver) => buildQuery<RequestCommit, ResponseCommit>({
+export const getCommit = buildQuery<RequestCommit, ResponseCommit>({
   encode: RequestCommit.encode,
   decode: ResponseCommit.decode,
   service: "tendermint.abci.ABCIApplication",
-  method: "Commit",
-  clientResolver
+  method: "Commit"
 });
-export const createGetInitChain = (clientResolver?: RpcResolver) => buildQuery<RequestInitChain, ResponseInitChain>({
+export const getInitChain = buildQuery<RequestInitChain, ResponseInitChain>({
   encode: RequestInitChain.encode,
   decode: ResponseInitChain.decode,
   service: "tendermint.abci.ABCIApplication",
-  method: "InitChain",
-  clientResolver
+  method: "InitChain"
 });
-export const createGetBeginBlock = (clientResolver?: RpcResolver) => buildQuery<RequestBeginBlock, ResponseBeginBlock>({
+export const getBeginBlock = buildQuery<RequestBeginBlock, ResponseBeginBlock>({
   encode: RequestBeginBlock.encode,
   decode: ResponseBeginBlock.decode,
   service: "tendermint.abci.ABCIApplication",
-  method: "BeginBlock",
-  clientResolver
+  method: "BeginBlock"
 });
-export const createGetEndBlock = (clientResolver?: RpcResolver) => buildQuery<RequestEndBlock, ResponseEndBlock>({
+export const getEndBlock = buildQuery<RequestEndBlock, ResponseEndBlock>({
   encode: RequestEndBlock.encode,
   decode: ResponseEndBlock.decode,
   service: "tendermint.abci.ABCIApplication",
-  method: "EndBlock",
-  clientResolver
+  method: "EndBlock"
 });
-export const createGetListSnapshots = (clientResolver?: RpcResolver) => buildQuery<RequestListSnapshots, ResponseListSnapshots>({
+export const getListSnapshots = buildQuery<RequestListSnapshots, ResponseListSnapshots>({
   encode: RequestListSnapshots.encode,
   decode: ResponseListSnapshots.decode,
   service: "tendermint.abci.ABCIApplication",
-  method: "ListSnapshots",
-  clientResolver
+  method: "ListSnapshots"
 });
-export const createGetOfferSnapshot = (clientResolver?: RpcResolver) => buildQuery<RequestOfferSnapshot, ResponseOfferSnapshot>({
+export const getOfferSnapshot = buildQuery<RequestOfferSnapshot, ResponseOfferSnapshot>({
   encode: RequestOfferSnapshot.encode,
   decode: ResponseOfferSnapshot.decode,
   service: "tendermint.abci.ABCIApplication",
-  method: "OfferSnapshot",
-  clientResolver
+  method: "OfferSnapshot"
 });
-export const createGetLoadSnapshotChunk = (clientResolver?: RpcResolver) => buildQuery<RequestLoadSnapshotChunk, ResponseLoadSnapshotChunk>({
+export const getLoadSnapshotChunk = buildQuery<RequestLoadSnapshotChunk, ResponseLoadSnapshotChunk>({
   encode: RequestLoadSnapshotChunk.encode,
   decode: ResponseLoadSnapshotChunk.decode,
   service: "tendermint.abci.ABCIApplication",
-  method: "LoadSnapshotChunk",
-  clientResolver
+  method: "LoadSnapshotChunk"
 });
-export const createGetApplySnapshotChunk = (clientResolver?: RpcResolver) => buildQuery<RequestApplySnapshotChunk, ResponseApplySnapshotChunk>({
+export const getApplySnapshotChunk = buildQuery<RequestApplySnapshotChunk, ResponseApplySnapshotChunk>({
   encode: RequestApplySnapshotChunk.encode,
   decode: ResponseApplySnapshotChunk.decode,
   service: "tendermint.abci.ABCIApplication",
-  method: "ApplySnapshotChunk",
-  clientResolver
+  method: "ApplySnapshotChunk"
 });

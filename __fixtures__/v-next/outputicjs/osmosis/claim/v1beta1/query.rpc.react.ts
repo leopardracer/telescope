@@ -1,23 +1,23 @@
 import { buildUseQuery } from "../../../react-query";
 import { QueryModuleAccountBalanceRequest, QueryModuleAccountBalanceResponse, QueryParamsRequest, QueryParamsResponse, QueryClaimRecordRequest, QueryClaimRecordResponse, QueryClaimableForActionRequest, QueryClaimableForActionResponse, QueryTotalClaimableRequest, QueryTotalClaimableResponse } from "./query";
-import { createGetModuleAccountBalance, createGetParams, createGetClaimRecord, createGetClaimableForAction, createGetTotalClaimable } from "./query.rpc.func";
+import { getModuleAccountBalance, getParams, getClaimRecord, getClaimableForAction, getTotalClaimable } from "./query.rpc.func";
 export const useGetModuleAccountBalance = buildUseQuery<QueryModuleAccountBalanceRequest, QueryModuleAccountBalanceResponse>({
-  builderQueryFn: createGetModuleAccountBalance,
+  builderQueryFn: getModuleAccountBalance,
   queryKeyPrefix: "ModuleAccountBalanceQuery"
 });
 export const useGetParams = buildUseQuery<QueryParamsRequest, QueryParamsResponse>({
-  builderQueryFn: createGetParams,
+  builderQueryFn: getParams,
   queryKeyPrefix: "ParamsQuery"
 });
 export const useGetClaimRecord = buildUseQuery<QueryClaimRecordRequest, QueryClaimRecordResponse>({
-  builderQueryFn: createGetClaimRecord,
+  builderQueryFn: getClaimRecord,
   queryKeyPrefix: "ClaimRecordQuery"
 });
 export const useGetClaimableForAction = buildUseQuery<QueryClaimableForActionRequest, QueryClaimableForActionResponse>({
-  builderQueryFn: createGetClaimableForAction,
+  builderQueryFn: getClaimableForAction,
   queryKeyPrefix: "ClaimableForActionQuery"
 });
 export const useGetTotalClaimable = buildUseQuery<QueryTotalClaimableRequest, QueryTotalClaimableResponse>({
-  builderQueryFn: createGetTotalClaimable,
+  builderQueryFn: getTotalClaimable,
   queryKeyPrefix: "TotalClaimableQuery"
 });

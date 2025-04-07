@@ -168,7 +168,7 @@ export const isRefIncluded = (
 /**
  * test if a package is included in certain pattern.
  * @param input is a package.
- * @param patterns to match the package 
+ * @param patterns to match the package
  * @returns bool
  */
 export const isPackageIncluded = (input, patterns)=>{
@@ -271,11 +271,9 @@ export function getHelperFuncName(
 
   let {
     funcBody: funcBodyFn,
-    creatorPrefix,
     hookPrefix,
   } = {
     funcBody: defaultFuncBodyFn,
-    creatorPrefix: "create",
     hookPrefix: "use",
     ...rule,
   };
@@ -288,7 +286,7 @@ export function getHelperFuncName(
       : funcBodyFn;
 
   return {
-    creator: camel(`${creatorPrefix}_${camel(funcBodyFn(methodKey))}`),
+    creator: camel(`${camel(funcBodyFn(methodKey))}`),
     hook: camel(`${hookPrefix}_${camel(funcBodyFn(methodKey))}`),
   };
 }

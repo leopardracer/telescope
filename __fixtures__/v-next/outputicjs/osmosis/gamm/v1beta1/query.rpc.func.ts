@@ -1,107 +1,92 @@
-import { RpcResolver, buildQuery } from "../../../helper-func-types";
+import { buildQuery } from "../../../helper-func-types";
 import { QueryPoolsRequest, QueryPoolsResponse, QueryNumPoolsRequest, QueryNumPoolsResponse, QueryTotalLiquidityRequest, QueryTotalLiquidityResponse, QueryPoolsWithFilterRequest, QueryPoolsWithFilterResponse, QueryPoolRequest, QueryPoolResponse, QueryPoolTypeRequest, QueryPoolTypeResponse, QueryCalcJoinPoolNoSwapSharesRequest, QueryCalcJoinPoolNoSwapSharesResponse, QueryCalcJoinPoolSharesRequest, QueryCalcJoinPoolSharesResponse, QueryCalcExitPoolCoinsFromSharesRequest, QueryCalcExitPoolCoinsFromSharesResponse, QueryPoolParamsRequest, QueryPoolParamsResponse, QueryTotalPoolLiquidityRequest, QueryTotalPoolLiquidityResponse, QueryTotalSharesRequest, QueryTotalSharesResponse, QuerySpotPriceRequest, QuerySpotPriceResponse, QuerySwapExactAmountInRequest, QuerySwapExactAmountInResponse, QuerySwapExactAmountOutRequest, QuerySwapExactAmountOutResponse } from "./query";
-export const createGetPools = (clientResolver?: RpcResolver) => buildQuery<QueryPoolsRequest, QueryPoolsResponse>({
+export const getPools = buildQuery<QueryPoolsRequest, QueryPoolsResponse>({
   encode: QueryPoolsRequest.encode,
   decode: QueryPoolsResponse.decode,
   service: "osmosis.gamm.v1beta1.Query",
-  method: "Pools",
-  clientResolver
+  method: "Pools"
 });
-export const createGetNumPools = (clientResolver?: RpcResolver) => buildQuery<QueryNumPoolsRequest, QueryNumPoolsResponse>({
+export const getNumPools = buildQuery<QueryNumPoolsRequest, QueryNumPoolsResponse>({
   encode: QueryNumPoolsRequest.encode,
   decode: QueryNumPoolsResponse.decode,
   service: "osmosis.gamm.v1beta1.Query",
-  method: "NumPools",
-  clientResolver
+  method: "NumPools"
 });
-export const createGetTotalLiquidity = (clientResolver?: RpcResolver) => buildQuery<QueryTotalLiquidityRequest, QueryTotalLiquidityResponse>({
+export const getTotalLiquidity = buildQuery<QueryTotalLiquidityRequest, QueryTotalLiquidityResponse>({
   encode: QueryTotalLiquidityRequest.encode,
   decode: QueryTotalLiquidityResponse.decode,
   service: "osmosis.gamm.v1beta1.Query",
-  method: "TotalLiquidity",
-  clientResolver
+  method: "TotalLiquidity"
 });
-export const createGetPoolsWithFilter = (clientResolver?: RpcResolver) => buildQuery<QueryPoolsWithFilterRequest, QueryPoolsWithFilterResponse>({
+export const getPoolsWithFilter = buildQuery<QueryPoolsWithFilterRequest, QueryPoolsWithFilterResponse>({
   encode: QueryPoolsWithFilterRequest.encode,
   decode: QueryPoolsWithFilterResponse.decode,
   service: "osmosis.gamm.v1beta1.Query",
-  method: "PoolsWithFilter",
-  clientResolver
+  method: "PoolsWithFilter"
 });
-export const createGetPool = (clientResolver?: RpcResolver) => buildQuery<QueryPoolRequest, QueryPoolResponse>({
+export const getPool = buildQuery<QueryPoolRequest, QueryPoolResponse>({
   encode: QueryPoolRequest.encode,
   decode: QueryPoolResponse.decode,
   service: "osmosis.gamm.v1beta1.Query",
-  method: "Pool",
-  clientResolver
+  method: "Pool"
 });
-export const createGetPoolType = (clientResolver?: RpcResolver) => buildQuery<QueryPoolTypeRequest, QueryPoolTypeResponse>({
+export const getPoolType = buildQuery<QueryPoolTypeRequest, QueryPoolTypeResponse>({
   encode: QueryPoolTypeRequest.encode,
   decode: QueryPoolTypeResponse.decode,
   service: "osmosis.gamm.v1beta1.Query",
-  method: "PoolType",
-  clientResolver
+  method: "PoolType"
 });
-export const createGetCalcJoinPoolNoSwapShares = (clientResolver?: RpcResolver) => buildQuery<QueryCalcJoinPoolNoSwapSharesRequest, QueryCalcJoinPoolNoSwapSharesResponse>({
+export const getCalcJoinPoolNoSwapShares = buildQuery<QueryCalcJoinPoolNoSwapSharesRequest, QueryCalcJoinPoolNoSwapSharesResponse>({
   encode: QueryCalcJoinPoolNoSwapSharesRequest.encode,
   decode: QueryCalcJoinPoolNoSwapSharesResponse.decode,
   service: "osmosis.gamm.v1beta1.Query",
-  method: "CalcJoinPoolNoSwapShares",
-  clientResolver
+  method: "CalcJoinPoolNoSwapShares"
 });
-export const createGetCalcJoinPoolShares = (clientResolver?: RpcResolver) => buildQuery<QueryCalcJoinPoolSharesRequest, QueryCalcJoinPoolSharesResponse>({
+export const getCalcJoinPoolShares = buildQuery<QueryCalcJoinPoolSharesRequest, QueryCalcJoinPoolSharesResponse>({
   encode: QueryCalcJoinPoolSharesRequest.encode,
   decode: QueryCalcJoinPoolSharesResponse.decode,
   service: "osmosis.gamm.v1beta1.Query",
-  method: "CalcJoinPoolShares",
-  clientResolver
+  method: "CalcJoinPoolShares"
 });
-export const createGetCalcExitPoolCoinsFromShares = (clientResolver?: RpcResolver) => buildQuery<QueryCalcExitPoolCoinsFromSharesRequest, QueryCalcExitPoolCoinsFromSharesResponse>({
+export const getCalcExitPoolCoinsFromShares = buildQuery<QueryCalcExitPoolCoinsFromSharesRequest, QueryCalcExitPoolCoinsFromSharesResponse>({
   encode: QueryCalcExitPoolCoinsFromSharesRequest.encode,
   decode: QueryCalcExitPoolCoinsFromSharesResponse.decode,
   service: "osmosis.gamm.v1beta1.Query",
-  method: "CalcExitPoolCoinsFromShares",
-  clientResolver
+  method: "CalcExitPoolCoinsFromShares"
 });
-export const createGetPoolParams = (clientResolver?: RpcResolver) => buildQuery<QueryPoolParamsRequest, QueryPoolParamsResponse>({
+export const getPoolParams = buildQuery<QueryPoolParamsRequest, QueryPoolParamsResponse>({
   encode: QueryPoolParamsRequest.encode,
   decode: QueryPoolParamsResponse.decode,
   service: "osmosis.gamm.v1beta1.Query",
-  method: "PoolParams",
-  clientResolver
+  method: "PoolParams"
 });
-export const createGetTotalPoolLiquidity = (clientResolver?: RpcResolver) => buildQuery<QueryTotalPoolLiquidityRequest, QueryTotalPoolLiquidityResponse>({
+export const getTotalPoolLiquidity = buildQuery<QueryTotalPoolLiquidityRequest, QueryTotalPoolLiquidityResponse>({
   encode: QueryTotalPoolLiquidityRequest.encode,
   decode: QueryTotalPoolLiquidityResponse.decode,
   service: "osmosis.gamm.v1beta1.Query",
-  method: "TotalPoolLiquidity",
-  clientResolver
+  method: "TotalPoolLiquidity"
 });
-export const createGetTotalShares = (clientResolver?: RpcResolver) => buildQuery<QueryTotalSharesRequest, QueryTotalSharesResponse>({
+export const getTotalShares = buildQuery<QueryTotalSharesRequest, QueryTotalSharesResponse>({
   encode: QueryTotalSharesRequest.encode,
   decode: QueryTotalSharesResponse.decode,
   service: "osmosis.gamm.v1beta1.Query",
-  method: "TotalShares",
-  clientResolver
+  method: "TotalShares"
 });
-export const createGetSpotPrice = (clientResolver?: RpcResolver) => buildQuery<QuerySpotPriceRequest, QuerySpotPriceResponse>({
+export const getSpotPrice = buildQuery<QuerySpotPriceRequest, QuerySpotPriceResponse>({
   encode: QuerySpotPriceRequest.encode,
   decode: QuerySpotPriceResponse.decode,
   service: "osmosis.gamm.v1beta1.Query",
-  method: "SpotPrice",
-  clientResolver
+  method: "SpotPrice"
 });
-export const createGetEstimateSwapExactAmountIn = (clientResolver?: RpcResolver) => buildQuery<QuerySwapExactAmountInRequest, QuerySwapExactAmountInResponse>({
+export const getEstimateSwapExactAmountIn = buildQuery<QuerySwapExactAmountInRequest, QuerySwapExactAmountInResponse>({
   encode: QuerySwapExactAmountInRequest.encode,
   decode: QuerySwapExactAmountInResponse.decode,
   service: "osmosis.gamm.v1beta1.Query",
-  method: "EstimateSwapExactAmountIn",
-  clientResolver
+  method: "EstimateSwapExactAmountIn"
 });
-export const createGetEstimateSwapExactAmountOut = (clientResolver?: RpcResolver) => buildQuery<QuerySwapExactAmountOutRequest, QuerySwapExactAmountOutResponse>({
+export const getEstimateSwapExactAmountOut = buildQuery<QuerySwapExactAmountOutRequest, QuerySwapExactAmountOutResponse>({
   encode: QuerySwapExactAmountOutRequest.encode,
   decode: QuerySwapExactAmountOutResponse.decode,
   service: "osmosis.gamm.v1beta1.Query",
-  method: "EstimateSwapExactAmountOut",
-  clientResolver
+  method: "EstimateSwapExactAmountOut"
 });

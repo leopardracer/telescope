@@ -1,27 +1,27 @@
 import { buildUseQuery } from "../../../react-query";
 import { QueryGaugeIdsRequest, QueryGaugeIdsResponse, QueryDistrInfoRequest, QueryDistrInfoResponse, QueryParamsRequest, QueryParamsResponse, QueryLockableDurationsRequest, QueryLockableDurationsResponse, QueryIncentivizedPoolsRequest, QueryIncentivizedPoolsResponse, QueryExternalIncentiveGaugesRequest, QueryExternalIncentiveGaugesResponse } from "./query";
-import { createGetGaugeIds, createGetDistrInfo, createGetParams, createGetLockableDurations, createGetIncentivizedPools, createGetExternalIncentiveGauges } from "./query.rpc.func";
+import { getGaugeIds, getDistrInfo, getParams, getLockableDurations, getIncentivizedPools, getExternalIncentiveGauges } from "./query.rpc.func";
 export const useGetGaugeIds = buildUseQuery<QueryGaugeIdsRequest, QueryGaugeIdsResponse>({
-  builderQueryFn: createGetGaugeIds,
+  builderQueryFn: getGaugeIds,
   queryKeyPrefix: "GaugeIdsQuery"
 });
 export const useGetDistrInfo = buildUseQuery<QueryDistrInfoRequest, QueryDistrInfoResponse>({
-  builderQueryFn: createGetDistrInfo,
+  builderQueryFn: getDistrInfo,
   queryKeyPrefix: "DistrInfoQuery"
 });
 export const useGetParams = buildUseQuery<QueryParamsRequest, QueryParamsResponse>({
-  builderQueryFn: createGetParams,
+  builderQueryFn: getParams,
   queryKeyPrefix: "ParamsQuery"
 });
 export const useGetLockableDurations = buildUseQuery<QueryLockableDurationsRequest, QueryLockableDurationsResponse>({
-  builderQueryFn: createGetLockableDurations,
+  builderQueryFn: getLockableDurations,
   queryKeyPrefix: "LockableDurationsQuery"
 });
 export const useGetIncentivizedPools = buildUseQuery<QueryIncentivizedPoolsRequest, QueryIncentivizedPoolsResponse>({
-  builderQueryFn: createGetIncentivizedPools,
+  builderQueryFn: getIncentivizedPools,
   queryKeyPrefix: "IncentivizedPoolsQuery"
 });
 export const useGetExternalIncentiveGauges = buildUseQuery<QueryExternalIncentiveGaugesRequest, QueryExternalIncentiveGaugesResponse>({
-  builderQueryFn: createGetExternalIncentiveGauges,
+  builderQueryFn: getExternalIncentiveGauges,
   queryKeyPrefix: "ExternalIncentiveGaugesQuery"
 });

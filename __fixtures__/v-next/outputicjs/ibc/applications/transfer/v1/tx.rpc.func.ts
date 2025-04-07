@@ -1,9 +1,5 @@
-import { buildTx, SigningClientResolver } from "../../../../helper-func-types";
-import { toEncoders, toConverters } from "@interchainjs/cosmos/utils";
+import { buildTx } from "../../../../helper-func-types";
 import { MsgTransfer } from "./tx";
-export const createTransfer = (clientResolver?: SigningClientResolver) => buildTx<MsgTransfer>({
-  clientResolver,
-  typeUrl: MsgTransfer.typeUrl,
-  encoders: toEncoders(MsgTransfer),
-  converters: toConverters(MsgTransfer)
+export const transfer = buildTx<MsgTransfer>({
+  msg: MsgTransfer
 });

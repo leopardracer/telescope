@@ -1,16 +1,14 @@
-import { RpcResolver, buildQuery } from "../../../helper-func-types";
+import { buildQuery } from "../../../helper-func-types";
 import { QueryProvidersRequest, QueryProvidersResponse, QueryProviderRequest, QueryProviderResponse } from "./query";
-export const createGetProviders = (clientResolver?: RpcResolver) => buildQuery<QueryProvidersRequest, QueryProvidersResponse>({
+export const getProviders = buildQuery<QueryProvidersRequest, QueryProvidersResponse>({
   encode: QueryProvidersRequest.encode,
   decode: QueryProvidersResponse.decode,
   service: "akash.provider.v1beta2.Query",
-  method: "Providers",
-  clientResolver
+  method: "Providers"
 });
-export const createGetProvider = (clientResolver?: RpcResolver) => buildQuery<QueryProviderRequest, QueryProviderResponse>({
+export const getProvider = buildQuery<QueryProviderRequest, QueryProviderResponse>({
   encode: QueryProviderRequest.encode,
   decode: QueryProviderResponse.decode,
   service: "akash.provider.v1beta2.Query",
-  method: "Provider",
-  clientResolver
+  method: "Provider"
 });

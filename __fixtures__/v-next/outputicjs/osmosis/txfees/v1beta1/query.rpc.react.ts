@@ -1,19 +1,19 @@
 import { buildUseQuery } from "../../../react-query";
 import { QueryFeeTokensRequest, QueryFeeTokensResponse, QueryDenomSpotPriceRequest, QueryDenomSpotPriceResponse, QueryDenomPoolIdRequest, QueryDenomPoolIdResponse, QueryBaseDenomRequest, QueryBaseDenomResponse } from "./query";
-import { createGetFeeTokens, createGetDenomSpotPrice, createGetDenomPoolId, createGetBaseDenom } from "./query.rpc.func";
+import { getFeeTokens, getDenomSpotPrice, getDenomPoolId, getBaseDenom } from "./query.rpc.func";
 export const useGetFeeTokens = buildUseQuery<QueryFeeTokensRequest, QueryFeeTokensResponse>({
-  builderQueryFn: createGetFeeTokens,
+  builderQueryFn: getFeeTokens,
   queryKeyPrefix: "FeeTokensQuery"
 });
 export const useGetDenomSpotPrice = buildUseQuery<QueryDenomSpotPriceRequest, QueryDenomSpotPriceResponse>({
-  builderQueryFn: createGetDenomSpotPrice,
+  builderQueryFn: getDenomSpotPrice,
   queryKeyPrefix: "DenomSpotPriceQuery"
 });
 export const useGetDenomPoolId = buildUseQuery<QueryDenomPoolIdRequest, QueryDenomPoolIdResponse>({
-  builderQueryFn: createGetDenomPoolId,
+  builderQueryFn: getDenomPoolId,
   queryKeyPrefix: "DenomPoolIdQuery"
 });
 export const useGetBaseDenom = buildUseQuery<QueryBaseDenomRequest, QueryBaseDenomResponse>({
-  builderQueryFn: createGetBaseDenom,
+  builderQueryFn: getBaseDenom,
   queryKeyPrefix: "BaseDenomQuery"
 });

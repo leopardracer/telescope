@@ -1,30 +1,26 @@
-import { RpcResolver, buildQuery } from "../../../helper-func-types";
+import { buildQuery } from "../../../helper-func-types";
 import { QueryAllProvidersAttributesRequest, QueryProvidersResponse, QueryProviderAttributesRequest, QueryProviderAuditorRequest, QueryAuditorAttributesRequest } from "./query";
-export const createGetAllProvidersAttributes = (clientResolver?: RpcResolver) => buildQuery<QueryAllProvidersAttributesRequest, QueryProvidersResponse>({
+export const getAllProvidersAttributes = buildQuery<QueryAllProvidersAttributesRequest, QueryProvidersResponse>({
   encode: QueryAllProvidersAttributesRequest.encode,
   decode: QueryProvidersResponse.decode,
   service: "akash.audit.v1beta2.Query",
-  method: "AllProvidersAttributes",
-  clientResolver
+  method: "AllProvidersAttributes"
 });
-export const createGetProviderAttributes = (clientResolver?: RpcResolver) => buildQuery<QueryProviderAttributesRequest, QueryProvidersResponse>({
+export const getProviderAttributes = buildQuery<QueryProviderAttributesRequest, QueryProvidersResponse>({
   encode: QueryProviderAttributesRequest.encode,
   decode: QueryProvidersResponse.decode,
   service: "akash.audit.v1beta2.Query",
-  method: "ProviderAttributes",
-  clientResolver
+  method: "ProviderAttributes"
 });
-export const createGetProviderAuditorAttributes = (clientResolver?: RpcResolver) => buildQuery<QueryProviderAuditorRequest, QueryProvidersResponse>({
+export const getProviderAuditorAttributes = buildQuery<QueryProviderAuditorRequest, QueryProvidersResponse>({
   encode: QueryProviderAuditorRequest.encode,
   decode: QueryProvidersResponse.decode,
   service: "akash.audit.v1beta2.Query",
-  method: "ProviderAuditorAttributes",
-  clientResolver
+  method: "ProviderAuditorAttributes"
 });
-export const createGetAuditorAttributes = (clientResolver?: RpcResolver) => buildQuery<QueryAuditorAttributesRequest, QueryProvidersResponse>({
+export const getAuditorAttributes = buildQuery<QueryAuditorAttributesRequest, QueryProvidersResponse>({
   encode: QueryAuditorAttributesRequest.encode,
   decode: QueryProvidersResponse.decode,
   service: "akash.audit.v1beta2.Query",
-  method: "AuditorAttributes",
-  clientResolver
+  method: "AuditorAttributes"
 });

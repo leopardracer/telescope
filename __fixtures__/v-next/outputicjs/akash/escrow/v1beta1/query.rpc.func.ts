@@ -1,16 +1,14 @@
-import { RpcResolver, buildQuery } from "../../../helper-func-types";
+import { buildQuery } from "../../../helper-func-types";
 import { QueryAccountsRequest, QueryAccountsResponse, QueryPaymentsRequest, QueryPaymentsResponse } from "./query";
-export const createGetAccounts = (clientResolver?: RpcResolver) => buildQuery<QueryAccountsRequest, QueryAccountsResponse>({
+export const getAccounts = buildQuery<QueryAccountsRequest, QueryAccountsResponse>({
   encode: QueryAccountsRequest.encode,
   decode: QueryAccountsResponse.decode,
   service: "akash.escrow.v1beta1.Query",
-  method: "Accounts",
-  clientResolver
+  method: "Accounts"
 });
-export const createGetPayments = (clientResolver?: RpcResolver) => buildQuery<QueryPaymentsRequest, QueryPaymentsResponse>({
+export const getPayments = buildQuery<QueryPaymentsRequest, QueryPaymentsResponse>({
   encode: QueryPaymentsRequest.encode,
   decode: QueryPaymentsResponse.decode,
   service: "akash.escrow.v1beta1.Query",
-  method: "Payments",
-  clientResolver
+  method: "Payments"
 });

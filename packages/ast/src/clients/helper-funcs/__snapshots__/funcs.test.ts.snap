@@ -1,33 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`msg funcs works 1`] = `
-"export const createSend = (clientResolver?: SigningClientResolver) => buildTx<MsgSend>({
-  clientResolver,
-  typeUrl: MsgSend.typeUrl,
-  encoders: toEncoders(MsgSend),
-  converters: toConverters(MsgSend)
+"export const send = buildTx<MsgSend>({
+  msg: MsgSend
 });"
 `;
 
 exports[`msg funcs works 2`] = `
 "export const useSend = buildUseMutation<MsgSend, Error>({
-  builderMutationFn: createSend
+  builderMutationFn: send
 });"
 `;
 
 exports[`query funcs works 1`] = `
-"export const createGetBalance = (clientResolver?: RpcResolver) => buildQuery<QueryBalanceRequest, QueryBalanceResponse>({
+"export const getBalance = buildQuery<QueryBalanceRequest, QueryBalanceResponse>({
   encode: QueryBalanceRequest.encode,
   decode: QueryBalanceResponse.decode,
   service: "cosmos.bank.v1beta1.Query",
-  method: "Balance",
-  clientResolver
+  method: "Balance"
 });"
 `;
 
 exports[`query funcs works 2`] = `
 "export const useBalance = buildUseQuery<QueryBalanceRequest, QueryBalanceResponse>({
-  builderQueryFn: createGetBalance,
+  builderQueryFn: getBalance,
   queryKeyPrefix: "BalanceQuery"
 });"
 `;

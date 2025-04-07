@@ -1,15 +1,8 @@
-import { buildTx, SigningClientResolver } from "../../../../helper-func-types";
-import { toEncoders, toConverters } from "@interchainjs/cosmos/utils";
+import { buildTx } from "../../../../helper-func-types";
 import { MsgCreateStableswapPool, MsgStableSwapAdjustScalingFactors } from "./tx";
-export const createCreateStableswapPool = (clientResolver?: SigningClientResolver) => buildTx<MsgCreateStableswapPool>({
-  clientResolver,
-  typeUrl: MsgCreateStableswapPool.typeUrl,
-  encoders: toEncoders(MsgCreateStableswapPool),
-  converters: toConverters(MsgCreateStableswapPool)
+export const createStableswapPool = buildTx<MsgCreateStableswapPool>({
+  msg: MsgCreateStableswapPool
 });
-export const createStableSwapAdjustScalingFactors = (clientResolver?: SigningClientResolver) => buildTx<MsgStableSwapAdjustScalingFactors>({
-  clientResolver,
-  typeUrl: MsgStableSwapAdjustScalingFactors.typeUrl,
-  encoders: toEncoders(MsgStableSwapAdjustScalingFactors),
-  converters: toConverters(MsgStableSwapAdjustScalingFactors)
+export const stableSwapAdjustScalingFactors = buildTx<MsgStableSwapAdjustScalingFactors>({
+  msg: MsgStableSwapAdjustScalingFactors
 });

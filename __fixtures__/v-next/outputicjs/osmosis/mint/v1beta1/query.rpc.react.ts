@@ -1,11 +1,11 @@
 import { buildUseQuery } from "../../../react-query";
 import { QueryParamsRequest, QueryParamsResponse, QueryEpochProvisionsRequest, QueryEpochProvisionsResponse } from "./query";
-import { createGetParams, createGetEpochProvisions } from "./query.rpc.func";
+import { getParams, getEpochProvisions } from "./query.rpc.func";
 export const useGetParams = buildUseQuery<QueryParamsRequest, QueryParamsResponse>({
-  builderQueryFn: createGetParams,
+  builderQueryFn: getParams,
   queryKeyPrefix: "ParamsQuery"
 });
 export const useGetEpochProvisions = buildUseQuery<QueryEpochProvisionsRequest, QueryEpochProvisionsResponse>({
-  builderQueryFn: createGetEpochProvisions,
+  builderQueryFn: getEpochProvisions,
   queryKeyPrefix: "EpochProvisionsQuery"
 });

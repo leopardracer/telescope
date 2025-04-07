@@ -1,15 +1,15 @@
 import { buildUseMutation } from "../../../../react-query";
 import { MsgCreateClient, MsgUpdateClient, MsgUpgradeClient, MsgSubmitMisbehaviour } from "./tx";
-import { createCreateClient, createUpdateClient, createUpgradeClient, createSubmitMisbehaviour } from "./tx.rpc.func";
+import { createClient, updateClient, upgradeClient, submitMisbehaviour } from "./tx.rpc.func";
 export const useCreateClient = buildUseMutation<MsgCreateClient, Error>({
-  builderMutationFn: createCreateClient
+  builderMutationFn: createClient
 });
 export const useUpdateClient = buildUseMutation<MsgUpdateClient, Error>({
-  builderMutationFn: createUpdateClient
+  builderMutationFn: updateClient
 });
 export const useUpgradeClient = buildUseMutation<MsgUpgradeClient, Error>({
-  builderMutationFn: createUpgradeClient
+  builderMutationFn: upgradeClient
 });
 export const useSubmitMisbehaviour = buildUseMutation<MsgSubmitMisbehaviour, Error>({
-  builderMutationFn: createSubmitMisbehaviour
+  builderMutationFn: submitMisbehaviour
 });

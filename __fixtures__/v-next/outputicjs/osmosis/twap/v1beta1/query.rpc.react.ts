@@ -1,15 +1,15 @@
 import { buildUseQuery } from "../../../react-query";
 import { ParamsRequest, ParamsResponse, ArithmeticTwapRequest, ArithmeticTwapResponse, ArithmeticTwapToNowRequest, ArithmeticTwapToNowResponse } from "./query";
-import { createGetParams, createGetArithmeticTwap, createGetArithmeticTwapToNow } from "./query.rpc.func";
+import { getParams, getArithmeticTwap, getArithmeticTwapToNow } from "./query.rpc.func";
 export const useGetParams = buildUseQuery<ParamsRequest, ParamsResponse>({
-  builderQueryFn: createGetParams,
+  builderQueryFn: getParams,
   queryKeyPrefix: "ParamsQuery"
 });
 export const useGetArithmeticTwap = buildUseQuery<ArithmeticTwapRequest, ArithmeticTwapResponse>({
-  builderQueryFn: createGetArithmeticTwap,
+  builderQueryFn: getArithmeticTwap,
   queryKeyPrefix: "ArithmeticTwapQuery"
 });
 export const useGetArithmeticTwapToNow = buildUseQuery<ArithmeticTwapToNowRequest, ArithmeticTwapToNowResponse>({
-  builderQueryFn: createGetArithmeticTwapToNow,
+  builderQueryFn: getArithmeticTwapToNow,
   queryKeyPrefix: "ArithmeticTwapToNowQuery"
 });

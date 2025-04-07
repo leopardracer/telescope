@@ -1,11 +1,11 @@
 import { buildUseQuery } from "../../../react-query";
 import { QueryProvidersRequest, QueryProvidersResponse, QueryProviderRequest, QueryProviderResponse } from "./query";
-import { createGetProviders, createGetProvider } from "./query.rpc.func";
+import { getProviders, getProvider } from "./query.rpc.func";
 export const useGetProviders = buildUseQuery<QueryProvidersRequest, QueryProvidersResponse>({
-  builderQueryFn: createGetProviders,
+  builderQueryFn: getProviders,
   queryKeyPrefix: "ProvidersQuery"
 });
 export const useGetProvider = buildUseQuery<QueryProviderRequest, QueryProviderResponse>({
-  builderQueryFn: createGetProvider,
+  builderQueryFn: getProvider,
   queryKeyPrefix: "ProviderQuery"
 });

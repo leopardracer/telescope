@@ -1,44 +1,38 @@
-import { RpcResolver, buildQuery } from "../../../helper-func-types";
+import { buildQuery } from "../../../helper-func-types";
 import { QueryPeriodRequest, QueryPeriodResponse, QueryEpochMintProvisionRequest, QueryEpochMintProvisionResponse, QuerySkippedEpochsRequest, QuerySkippedEpochsResponse, QueryCirculatingSupplyRequest, QueryCirculatingSupplyResponse, QueryInflationRateRequest, QueryInflationRateResponse, QueryParamsRequest, QueryParamsResponse } from "./query";
-export const createGetPeriod = (clientResolver?: RpcResolver) => buildQuery<QueryPeriodRequest, QueryPeriodResponse>({
+export const getPeriod = buildQuery<QueryPeriodRequest, QueryPeriodResponse>({
   encode: QueryPeriodRequest.encode,
   decode: QueryPeriodResponse.decode,
   service: "evmos.inflation.v1.Query",
-  method: "Period",
-  clientResolver
+  method: "Period"
 });
-export const createGetEpochMintProvision = (clientResolver?: RpcResolver) => buildQuery<QueryEpochMintProvisionRequest, QueryEpochMintProvisionResponse>({
+export const getEpochMintProvision = buildQuery<QueryEpochMintProvisionRequest, QueryEpochMintProvisionResponse>({
   encode: QueryEpochMintProvisionRequest.encode,
   decode: QueryEpochMintProvisionResponse.decode,
   service: "evmos.inflation.v1.Query",
-  method: "EpochMintProvision",
-  clientResolver
+  method: "EpochMintProvision"
 });
-export const createGetSkippedEpochs = (clientResolver?: RpcResolver) => buildQuery<QuerySkippedEpochsRequest, QuerySkippedEpochsResponse>({
+export const getSkippedEpochs = buildQuery<QuerySkippedEpochsRequest, QuerySkippedEpochsResponse>({
   encode: QuerySkippedEpochsRequest.encode,
   decode: QuerySkippedEpochsResponse.decode,
   service: "evmos.inflation.v1.Query",
-  method: "SkippedEpochs",
-  clientResolver
+  method: "SkippedEpochs"
 });
-export const createGetCirculatingSupply = (clientResolver?: RpcResolver) => buildQuery<QueryCirculatingSupplyRequest, QueryCirculatingSupplyResponse>({
+export const getCirculatingSupply = buildQuery<QueryCirculatingSupplyRequest, QueryCirculatingSupplyResponse>({
   encode: QueryCirculatingSupplyRequest.encode,
   decode: QueryCirculatingSupplyResponse.decode,
   service: "evmos.inflation.v1.Query",
-  method: "CirculatingSupply",
-  clientResolver
+  method: "CirculatingSupply"
 });
-export const createGetInflationRate = (clientResolver?: RpcResolver) => buildQuery<QueryInflationRateRequest, QueryInflationRateResponse>({
+export const getInflationRate = buildQuery<QueryInflationRateRequest, QueryInflationRateResponse>({
   encode: QueryInflationRateRequest.encode,
   decode: QueryInflationRateResponse.decode,
   service: "evmos.inflation.v1.Query",
-  method: "InflationRate",
-  clientResolver
+  method: "InflationRate"
 });
-export const createGetParams = (clientResolver?: RpcResolver) => buildQuery<QueryParamsRequest, QueryParamsResponse>({
+export const getParams = buildQuery<QueryParamsRequest, QueryParamsResponse>({
   encode: QueryParamsRequest.encode,
   decode: QueryParamsResponse.decode,
   service: "evmos.inflation.v1.Query",
-  method: "Params",
-  clientResolver
+  method: "Params"
 });

@@ -31,7 +31,7 @@ it("query funcs works", async () => {
             mockService.methods["Balance"],
             mockService.name,
             "Balance",
-            "createGetBalance"
+            "getBalance"
         )
     );
 
@@ -40,7 +40,7 @@ it("query funcs works", async () => {
             mockContext,
             mockService.methods["Balance"],
             "Balance",
-            "createGetBalance",
+            "getBalance",
             "useBalance"
         )
     );
@@ -65,7 +65,7 @@ it("msg funcs works", async () => {
         createMsgHelperCreator(
             mockContext,
             mockService.methods["Send"],
-            "createSend"
+            "send"
         )
     );
 
@@ -73,7 +73,7 @@ it("msg funcs works", async () => {
         createMsgHooks(
             mockContext,
             mockService.methods["Send"],
-            "createSend",
+            "send",
             "useSend"
         )
     );

@@ -102,8 +102,7 @@ export const UTILS: { [key: string]: UtilValue } = {
   buildTx:'__helper-func-types__',
   ISigningClient:'__helper-func-types__',
   buildQuery:'__helper-func-types__',
-  SigningClientResolver:'__helper-func-types__',
-  RpcResolver:'__helper-func-types__',
+  EndpointOrRpc:'__helper-func-types__',
   toConverters:'@interchainjs/cosmos/utils',
   toEncoders:'@interchainjs/cosmos/utils'
 };

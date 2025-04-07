@@ -1,9 +1,5 @@
-import { buildTx, SigningClientResolver } from "../../../helper-func-types";
-import { toEncoders, toConverters } from "@interchainjs/cosmos/utils";
+import { buildTx } from "../../../helper-func-types";
 import { MsgUnjail } from "./tx";
-export const createUnjail = (clientResolver?: SigningClientResolver) => buildTx<MsgUnjail>({
-  clientResolver,
-  typeUrl: MsgUnjail.typeUrl,
-  encoders: toEncoders(MsgUnjail),
-  converters: toConverters(MsgUnjail)
+export const unjail = buildTx<MsgUnjail>({
+  msg: MsgUnjail
 });

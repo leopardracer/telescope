@@ -1,12 +1,12 @@
 import { buildUseMutation } from "../../../react-query";
 import { MsgCreateProvider, MsgUpdateProvider, MsgDeleteProvider } from "./provider";
-import { createCreateProvider, createUpdateProvider, createDeleteProvider } from "./provider.rpc.func";
+import { createProvider, updateProvider, deleteProvider } from "./provider.rpc.func";
 export const useCreateProvider = buildUseMutation<MsgCreateProvider, Error>({
-  builderMutationFn: createCreateProvider
+  builderMutationFn: createProvider
 });
 export const useUpdateProvider = buildUseMutation<MsgUpdateProvider, Error>({
-  builderMutationFn: createUpdateProvider
+  builderMutationFn: updateProvider
 });
 export const useDeleteProvider = buildUseMutation<MsgDeleteProvider, Error>({
-  builderMutationFn: createDeleteProvider
+  builderMutationFn: deleteProvider
 });

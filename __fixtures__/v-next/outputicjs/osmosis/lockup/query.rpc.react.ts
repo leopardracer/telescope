@@ -1,71 +1,71 @@
 import { buildUseQuery } from "../../react-query";
 import { ModuleBalanceRequest, ModuleBalanceResponse, ModuleLockedAmountRequest, ModuleLockedAmountResponse, AccountUnlockableCoinsRequest, AccountUnlockableCoinsResponse, AccountUnlockingCoinsRequest, AccountUnlockingCoinsResponse, AccountLockedCoinsRequest, AccountLockedCoinsResponse, AccountLockedPastTimeRequest, AccountLockedPastTimeResponse, AccountLockedPastTimeNotUnlockingOnlyRequest, AccountLockedPastTimeNotUnlockingOnlyResponse, AccountUnlockedBeforeTimeRequest, AccountUnlockedBeforeTimeResponse, AccountLockedPastTimeDenomRequest, AccountLockedPastTimeDenomResponse, LockedDenomRequest, LockedDenomResponse, LockedRequest, LockedResponse, SyntheticLockupsByLockupIDRequest, SyntheticLockupsByLockupIDResponse, AccountLockedLongerDurationRequest, AccountLockedLongerDurationResponse, AccountLockedDurationRequest, AccountLockedDurationResponse, AccountLockedLongerDurationNotUnlockingOnlyRequest, AccountLockedLongerDurationNotUnlockingOnlyResponse, AccountLockedLongerDurationDenomRequest, AccountLockedLongerDurationDenomResponse, QueryParamsRequest, QueryParamsResponse } from "./query";
-import { createGetModuleBalance, createGetModuleLockedAmount, createGetAccountUnlockableCoins, createGetAccountUnlockingCoins, createGetAccountLockedCoins, createGetAccountLockedPastTime, createGetAccountLockedPastTimeNotUnlockingOnly, createGetAccountUnlockedBeforeTime, createGetAccountLockedPastTimeDenom, createGetLockedDenom, createGetLockedByID, createGetSyntheticLockupsByLockupID, createGetAccountLockedLongerDuration, createGetAccountLockedDuration, createGetAccountLockedLongerDurationNotUnlockingOnly, createGetAccountLockedLongerDurationDenom, createGetParams } from "./query.rpc.func";
+import { getModuleBalance, getModuleLockedAmount, getAccountUnlockableCoins, getAccountUnlockingCoins, getAccountLockedCoins, getAccountLockedPastTime, getAccountLockedPastTimeNotUnlockingOnly, getAccountUnlockedBeforeTime, getAccountLockedPastTimeDenom, getLockedDenom, getLockedByID, getSyntheticLockupsByLockupID, getAccountLockedLongerDuration, getAccountLockedDuration, getAccountLockedLongerDurationNotUnlockingOnly, getAccountLockedLongerDurationDenom, getParams } from "./query.rpc.func";
 export const useGetModuleBalance = buildUseQuery<ModuleBalanceRequest, ModuleBalanceResponse>({
-  builderQueryFn: createGetModuleBalance,
+  builderQueryFn: getModuleBalance,
   queryKeyPrefix: "ModuleBalanceQuery"
 });
 export const useGetModuleLockedAmount = buildUseQuery<ModuleLockedAmountRequest, ModuleLockedAmountResponse>({
-  builderQueryFn: createGetModuleLockedAmount,
+  builderQueryFn: getModuleLockedAmount,
   queryKeyPrefix: "ModuleLockedAmountQuery"
 });
 export const useGetAccountUnlockableCoins = buildUseQuery<AccountUnlockableCoinsRequest, AccountUnlockableCoinsResponse>({
-  builderQueryFn: createGetAccountUnlockableCoins,
+  builderQueryFn: getAccountUnlockableCoins,
   queryKeyPrefix: "AccountUnlockableCoinsQuery"
 });
 export const useGetAccountUnlockingCoins = buildUseQuery<AccountUnlockingCoinsRequest, AccountUnlockingCoinsResponse>({
-  builderQueryFn: createGetAccountUnlockingCoins,
+  builderQueryFn: getAccountUnlockingCoins,
   queryKeyPrefix: "AccountUnlockingCoinsQuery"
 });
 export const useGetAccountLockedCoins = buildUseQuery<AccountLockedCoinsRequest, AccountLockedCoinsResponse>({
-  builderQueryFn: createGetAccountLockedCoins,
+  builderQueryFn: getAccountLockedCoins,
   queryKeyPrefix: "AccountLockedCoinsQuery"
 });
 export const useGetAccountLockedPastTime = buildUseQuery<AccountLockedPastTimeRequest, AccountLockedPastTimeResponse>({
-  builderQueryFn: createGetAccountLockedPastTime,
+  builderQueryFn: getAccountLockedPastTime,
   queryKeyPrefix: "AccountLockedPastTimeQuery"
 });
 export const useGetAccountLockedPastTimeNotUnlockingOnly = buildUseQuery<AccountLockedPastTimeNotUnlockingOnlyRequest, AccountLockedPastTimeNotUnlockingOnlyResponse>({
-  builderQueryFn: createGetAccountLockedPastTimeNotUnlockingOnly,
+  builderQueryFn: getAccountLockedPastTimeNotUnlockingOnly,
   queryKeyPrefix: "AccountLockedPastTimeNotUnlockingOnlyQuery"
 });
 export const useGetAccountUnlockedBeforeTime = buildUseQuery<AccountUnlockedBeforeTimeRequest, AccountUnlockedBeforeTimeResponse>({
-  builderQueryFn: createGetAccountUnlockedBeforeTime,
+  builderQueryFn: getAccountUnlockedBeforeTime,
   queryKeyPrefix: "AccountUnlockedBeforeTimeQuery"
 });
 export const useGetAccountLockedPastTimeDenom = buildUseQuery<AccountLockedPastTimeDenomRequest, AccountLockedPastTimeDenomResponse>({
-  builderQueryFn: createGetAccountLockedPastTimeDenom,
+  builderQueryFn: getAccountLockedPastTimeDenom,
   queryKeyPrefix: "AccountLockedPastTimeDenomQuery"
 });
 export const useGetLockedDenom = buildUseQuery<LockedDenomRequest, LockedDenomResponse>({
-  builderQueryFn: createGetLockedDenom,
+  builderQueryFn: getLockedDenom,
   queryKeyPrefix: "LockedDenomQuery"
 });
 export const useGetLockedByID = buildUseQuery<LockedRequest, LockedResponse>({
-  builderQueryFn: createGetLockedByID,
+  builderQueryFn: getLockedByID,
   queryKeyPrefix: "LockedByIDQuery"
 });
 export const useGetSyntheticLockupsByLockupID = buildUseQuery<SyntheticLockupsByLockupIDRequest, SyntheticLockupsByLockupIDResponse>({
-  builderQueryFn: createGetSyntheticLockupsByLockupID,
+  builderQueryFn: getSyntheticLockupsByLockupID,
   queryKeyPrefix: "SyntheticLockupsByLockupIDQuery"
 });
 export const useGetAccountLockedLongerDuration = buildUseQuery<AccountLockedLongerDurationRequest, AccountLockedLongerDurationResponse>({
-  builderQueryFn: createGetAccountLockedLongerDuration,
+  builderQueryFn: getAccountLockedLongerDuration,
   queryKeyPrefix: "AccountLockedLongerDurationQuery"
 });
 export const useGetAccountLockedDuration = buildUseQuery<AccountLockedDurationRequest, AccountLockedDurationResponse>({
-  builderQueryFn: createGetAccountLockedDuration,
+  builderQueryFn: getAccountLockedDuration,
   queryKeyPrefix: "AccountLockedDurationQuery"
 });
 export const useGetAccountLockedLongerDurationNotUnlockingOnly = buildUseQuery<AccountLockedLongerDurationNotUnlockingOnlyRequest, AccountLockedLongerDurationNotUnlockingOnlyResponse>({
-  builderQueryFn: createGetAccountLockedLongerDurationNotUnlockingOnly,
+  builderQueryFn: getAccountLockedLongerDurationNotUnlockingOnly,
   queryKeyPrefix: "AccountLockedLongerDurationNotUnlockingOnlyQuery"
 });
 export const useGetAccountLockedLongerDurationDenom = buildUseQuery<AccountLockedLongerDurationDenomRequest, AccountLockedLongerDurationDenomResponse>({
-  builderQueryFn: createGetAccountLockedLongerDurationDenom,
+  builderQueryFn: getAccountLockedLongerDurationDenom,
   queryKeyPrefix: "AccountLockedLongerDurationDenomQuery"
 });
 export const useGetParams = buildUseQuery<QueryParamsRequest, QueryParamsResponse>({
-  builderQueryFn: createGetParams,
+  builderQueryFn: getParams,
   queryKeyPrefix: "ParamsQuery"
 });

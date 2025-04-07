@@ -1,30 +1,26 @@
-import { RpcResolver, buildQuery } from "../../../helper-func-types";
+import { buildQuery } from "../../../helper-func-types";
 import { QueryDevFeeInfosRequest, QueryDevFeeInfosResponse, QueryDevFeeInfoRequest, QueryDevFeeInfoResponse, QueryParamsRequest, QueryParamsResponse, QueryDevFeeInfosPerDeployerRequest, QueryDevFeeInfosPerDeployerResponse } from "./query";
-export const createGetDevFeeInfos = (clientResolver?: RpcResolver) => buildQuery<QueryDevFeeInfosRequest, QueryDevFeeInfosResponse>({
+export const getDevFeeInfos = buildQuery<QueryDevFeeInfosRequest, QueryDevFeeInfosResponse>({
   encode: QueryDevFeeInfosRequest.encode,
   decode: QueryDevFeeInfosResponse.decode,
   service: "evmos.fees.v1.Query",
-  method: "DevFeeInfos",
-  clientResolver
+  method: "DevFeeInfos"
 });
-export const createGetDevFeeInfo = (clientResolver?: RpcResolver) => buildQuery<QueryDevFeeInfoRequest, QueryDevFeeInfoResponse>({
+export const getDevFeeInfo = buildQuery<QueryDevFeeInfoRequest, QueryDevFeeInfoResponse>({
   encode: QueryDevFeeInfoRequest.encode,
   decode: QueryDevFeeInfoResponse.decode,
   service: "evmos.fees.v1.Query",
-  method: "DevFeeInfo",
-  clientResolver
+  method: "DevFeeInfo"
 });
-export const createGetParams = (clientResolver?: RpcResolver) => buildQuery<QueryParamsRequest, QueryParamsResponse>({
+export const getParams = buildQuery<QueryParamsRequest, QueryParamsResponse>({
   encode: QueryParamsRequest.encode,
   decode: QueryParamsResponse.decode,
   service: "evmos.fees.v1.Query",
-  method: "Params",
-  clientResolver
+  method: "Params"
 });
-export const createGetDevFeeInfosPerDeployer = (clientResolver?: RpcResolver) => buildQuery<QueryDevFeeInfosPerDeployerRequest, QueryDevFeeInfosPerDeployerResponse>({
+export const getDevFeeInfosPerDeployer = buildQuery<QueryDevFeeInfosPerDeployerRequest, QueryDevFeeInfosPerDeployerResponse>({
   encode: QueryDevFeeInfosPerDeployerRequest.encode,
   decode: QueryDevFeeInfosPerDeployerResponse.decode,
   service: "evmos.fees.v1.Query",
-  method: "DevFeeInfosPerDeployer",
-  clientResolver
+  method: "DevFeeInfosPerDeployer"
 });

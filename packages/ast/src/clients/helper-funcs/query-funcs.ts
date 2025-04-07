@@ -19,7 +19,7 @@ export function createQueryHelperCreator(
 ) {
     const pkgImportName = context.ref.proto.package + "." + svcKey;
 
-    context.addUtil("RpcResolver");
+    context.addUtil("EndpointOrRpc");
     context.addUtil("buildQuery");
 
     const useGlobalDecoderRegistry =
@@ -53,12 +53,6 @@ export function createQueryHelperCreator(
                     ast.identifier("method"),
                     ast.stringLiteral(methodKey)
                 ),
-                ast.objectProperty(
-                    ast.identifier("clientResolver"),
-                    ast.identifier("clientResolver"),
-                    false,
-                    true
-                ),
                 useGlobalDecoderRegistry &&
                 ast.objectProperty(
                     ast.identifier("deps"),
@@ -75,20 +69,11 @@ export function createQueryHelperCreator(
         ast.tsTypeReference(ast.identifier(service.responseType)),
     ]);
 
-    const customHookArgumentsType = ast.tsTypeAnnotation(
-        ast.tsTypeReference(ast.identifier("RpcResolver"))
-    );
-    const arg = ast.identifier("clientResolver");
-    arg.typeAnnotation = customHookArgumentsType;
-    arg.optional = true;
-
-    const arrowFuncExp = ast.arrowFunctionExpression([arg], callExpression);
-
     return ast.exportNamedDeclaration(
         ast.variableDeclaration("const", [
             ast.variableDeclarator(
                 ast.identifier(helperCreatorName),
-                arrowFuncExp
+                callExpression
             ),
         ])
     );

@@ -1,27 +1,27 @@
 import { buildUseMutation } from "../../../react-query";
 import { MsgJoinPool, MsgExitPool, MsgSwapExactAmountIn, MsgSwapExactAmountOut, MsgJoinSwapExternAmountIn, MsgJoinSwapShareAmountOut, MsgExitSwapExternAmountOut, MsgExitSwapShareAmountIn } from "./tx";
-import { createJoinPool, createExitPool, createSwapExactAmountIn, createSwapExactAmountOut, createJoinSwapExternAmountIn, createJoinSwapShareAmountOut, createExitSwapExternAmountOut, createExitSwapShareAmountIn } from "./tx.rpc.func";
+import { joinPool, exitPool, swapExactAmountIn, swapExactAmountOut, joinSwapExternAmountIn, joinSwapShareAmountOut, exitSwapExternAmountOut, exitSwapShareAmountIn } from "./tx.rpc.func";
 export const useJoinPool = buildUseMutation<MsgJoinPool, Error>({
-  builderMutationFn: createJoinPool
+  builderMutationFn: joinPool
 });
 export const useExitPool = buildUseMutation<MsgExitPool, Error>({
-  builderMutationFn: createExitPool
+  builderMutationFn: exitPool
 });
 export const useSwapExactAmountIn = buildUseMutation<MsgSwapExactAmountIn, Error>({
-  builderMutationFn: createSwapExactAmountIn
+  builderMutationFn: swapExactAmountIn
 });
 export const useSwapExactAmountOut = buildUseMutation<MsgSwapExactAmountOut, Error>({
-  builderMutationFn: createSwapExactAmountOut
+  builderMutationFn: swapExactAmountOut
 });
 export const useJoinSwapExternAmountIn = buildUseMutation<MsgJoinSwapExternAmountIn, Error>({
-  builderMutationFn: createJoinSwapExternAmountIn
+  builderMutationFn: joinSwapExternAmountIn
 });
 export const useJoinSwapShareAmountOut = buildUseMutation<MsgJoinSwapShareAmountOut, Error>({
-  builderMutationFn: createJoinSwapShareAmountOut
+  builderMutationFn: joinSwapShareAmountOut
 });
 export const useExitSwapExternAmountOut = buildUseMutation<MsgExitSwapExternAmountOut, Error>({
-  builderMutationFn: createExitSwapExternAmountOut
+  builderMutationFn: exitSwapExternAmountOut
 });
 export const useExitSwapShareAmountIn = buildUseMutation<MsgExitSwapShareAmountIn, Error>({
-  builderMutationFn: createExitSwapShareAmountIn
+  builderMutationFn: exitSwapShareAmountIn
 });

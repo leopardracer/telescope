@@ -1,39 +1,39 @@
 import { buildUseQuery } from "../../react-query";
 import { ModuleToDistributeCoinsRequest, ModuleToDistributeCoinsResponse, GaugeByIDRequest, GaugeByIDResponse, GaugesRequest, GaugesResponse, ActiveGaugesRequest, ActiveGaugesResponse, ActiveGaugesPerDenomRequest, ActiveGaugesPerDenomResponse, UpcomingGaugesRequest, UpcomingGaugesResponse, UpcomingGaugesPerDenomRequest, UpcomingGaugesPerDenomResponse, RewardsEstRequest, RewardsEstResponse, QueryLockableDurationsRequest, QueryLockableDurationsResponse } from "./query";
-import { createGetModuleToDistributeCoins, createGetGaugeByID, createGetGauges, createGetActiveGauges, createGetActiveGaugesPerDenom, createGetUpcomingGauges, createGetUpcomingGaugesPerDenom, createGetRewardsEst, createGetLockableDurations } from "./query.rpc.func";
+import { getModuleToDistributeCoins, getGaugeByID, getGauges, getActiveGauges, getActiveGaugesPerDenom, getUpcomingGauges, getUpcomingGaugesPerDenom, getRewardsEst, getLockableDurations } from "./query.rpc.func";
 export const useGetModuleToDistributeCoins = buildUseQuery<ModuleToDistributeCoinsRequest, ModuleToDistributeCoinsResponse>({
-  builderQueryFn: createGetModuleToDistributeCoins,
+  builderQueryFn: getModuleToDistributeCoins,
   queryKeyPrefix: "ModuleToDistributeCoinsQuery"
 });
 export const useGetGaugeByID = buildUseQuery<GaugeByIDRequest, GaugeByIDResponse>({
-  builderQueryFn: createGetGaugeByID,
+  builderQueryFn: getGaugeByID,
   queryKeyPrefix: "GaugeByIDQuery"
 });
 export const useGetGauges = buildUseQuery<GaugesRequest, GaugesResponse>({
-  builderQueryFn: createGetGauges,
+  builderQueryFn: getGauges,
   queryKeyPrefix: "GaugesQuery"
 });
 export const useGetActiveGauges = buildUseQuery<ActiveGaugesRequest, ActiveGaugesResponse>({
-  builderQueryFn: createGetActiveGauges,
+  builderQueryFn: getActiveGauges,
   queryKeyPrefix: "ActiveGaugesQuery"
 });
 export const useGetActiveGaugesPerDenom = buildUseQuery<ActiveGaugesPerDenomRequest, ActiveGaugesPerDenomResponse>({
-  builderQueryFn: createGetActiveGaugesPerDenom,
+  builderQueryFn: getActiveGaugesPerDenom,
   queryKeyPrefix: "ActiveGaugesPerDenomQuery"
 });
 export const useGetUpcomingGauges = buildUseQuery<UpcomingGaugesRequest, UpcomingGaugesResponse>({
-  builderQueryFn: createGetUpcomingGauges,
+  builderQueryFn: getUpcomingGauges,
   queryKeyPrefix: "UpcomingGaugesQuery"
 });
 export const useGetUpcomingGaugesPerDenom = buildUseQuery<UpcomingGaugesPerDenomRequest, UpcomingGaugesPerDenomResponse>({
-  builderQueryFn: createGetUpcomingGaugesPerDenom,
+  builderQueryFn: getUpcomingGaugesPerDenom,
   queryKeyPrefix: "UpcomingGaugesPerDenomQuery"
 });
 export const useGetRewardsEst = buildUseQuery<RewardsEstRequest, RewardsEstResponse>({
-  builderQueryFn: createGetRewardsEst,
+  builderQueryFn: getRewardsEst,
   queryKeyPrefix: "RewardsEstQuery"
 });
 export const useGetLockableDurations = buildUseQuery<QueryLockableDurationsRequest, QueryLockableDurationsResponse>({
-  builderQueryFn: createGetLockableDurations,
+  builderQueryFn: getLockableDurations,
   queryKeyPrefix: "LockableDurationsQuery"
 });

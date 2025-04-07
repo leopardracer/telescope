@@ -1,9 +1,9 @@
 import { buildUseMutation } from "../../../react-query";
 import { MsgCreateCertificate, MsgRevokeCertificate } from "./cert";
-import { createCreateCertificate, createRevokeCertificate } from "./cert.rpc.func";
+import { createCertificate, revokeCertificate } from "./cert.rpc.func";
 export const useCreateCertificate = buildUseMutation<MsgCreateCertificate, Error>({
-  builderMutationFn: createCreateCertificate
+  builderMutationFn: createCertificate
 });
 export const useRevokeCertificate = buildUseMutation<MsgRevokeCertificate, Error>({
-  builderMutationFn: createRevokeCertificate
+  builderMutationFn: revokeCertificate
 });

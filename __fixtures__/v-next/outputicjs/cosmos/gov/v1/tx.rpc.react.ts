@@ -1,18 +1,18 @@
 import { buildUseMutation } from "../../../react-query";
 import { MsgSubmitProposal, MsgExecLegacyContent, MsgVote, MsgVoteWeighted, MsgDeposit } from "./tx";
-import { createSubmitProposal, createExecLegacyContent, createVote, createVoteWeighted, createDeposit } from "./tx.rpc.func";
+import { submitProposal, execLegacyContent, vote, voteWeighted, deposit } from "./tx.rpc.func";
 export const useSubmitProposal = buildUseMutation<MsgSubmitProposal, Error>({
-  builderMutationFn: createSubmitProposal
+  builderMutationFn: submitProposal
 });
 export const useExecLegacyContent = buildUseMutation<MsgExecLegacyContent, Error>({
-  builderMutationFn: createExecLegacyContent
+  builderMutationFn: execLegacyContent
 });
 export const useVote = buildUseMutation<MsgVote, Error>({
-  builderMutationFn: createVote
+  builderMutationFn: vote
 });
 export const useVoteWeighted = buildUseMutation<MsgVoteWeighted, Error>({
-  builderMutationFn: createVoteWeighted
+  builderMutationFn: voteWeighted
 });
 export const useDeposit = buildUseMutation<MsgDeposit, Error>({
-  builderMutationFn: createDeposit
+  builderMutationFn: deposit
 });
