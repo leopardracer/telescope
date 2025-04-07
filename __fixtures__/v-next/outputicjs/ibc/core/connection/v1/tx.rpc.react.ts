@@ -1,15 +1,15 @@
 import { buildUseMutation } from "../../../../react-query";
 import { MsgConnectionOpenInit, MsgConnectionOpenTry, MsgConnectionOpenAck, MsgConnectionOpenConfirm } from "./tx";
-import { createConnectionOpenInit, createConnectionOpenTry, createConnectionOpenAck, createConnectionOpenConfirm } from "./tx.rpc.func";
+import { connectionOpenInit, connectionOpenTry, connectionOpenAck, connectionOpenConfirm } from "./tx.rpc.func";
 export const useConnectionOpenInit = buildUseMutation<MsgConnectionOpenInit, Error>({
-  builderMutationFn: createConnectionOpenInit
+  builderMutationFn: connectionOpenInit
 });
 export const useConnectionOpenTry = buildUseMutation<MsgConnectionOpenTry, Error>({
-  builderMutationFn: createConnectionOpenTry
+  builderMutationFn: connectionOpenTry
 });
 export const useConnectionOpenAck = buildUseMutation<MsgConnectionOpenAck, Error>({
-  builderMutationFn: createConnectionOpenAck
+  builderMutationFn: connectionOpenAck
 });
 export const useConnectionOpenConfirm = buildUseMutation<MsgConnectionOpenConfirm, Error>({
-  builderMutationFn: createConnectionOpenConfirm
+  builderMutationFn: connectionOpenConfirm
 });

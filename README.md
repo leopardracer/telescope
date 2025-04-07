@@ -465,13 +465,10 @@ See [RPC Clients](#rpc-clients) for more info.
 | `helperFunctions.include.patterns`   | Array of glob patterns patterns (e.g., `"**"`, `"cosmos.bank.v1beta1.bala*"`, etc.) to match specific proto services.     | `undefined`                         |
 | `helperFunctions.nameMappers` | Configuration object for customizing function names and prefixes | `{}` |
 | `helperFunctions.nameMappers.All.funcBody`  | Maps method names to a new name for all services.                                                     | `"unchanged"`                |
-| `helperFunctions.nameMappers.All.creatorPrefix` | Prefix for the function creator.                                                                      | `"create"`                   |
 | `helperFunctions.nameMappers.All.hookPrefix`    | Prefix for the hooks.                                                                                 | `"use"`                      |
 | `helperFunctions.nameMappers.Query.funcBody`   | Maps method names to a new name for `Query` services.                                                 | `"get"`                      |
-| `helperFunctions.nameMappers.Query.creatorPrefix`| Prefix for the function creator for `Query` services.                                                 | `"create"`                   |
 | `helperFunctions.nameMappers.Query.hookPrefix` | Prefix for the hooks for `Query` services.                                                            | `"use"`                      |
 | `helperFunctions.nameMappers.Msg.funcBody`     | Maps method names to a new name for `Msg` services.                                                   | `"unchanged"`                |
-| `helperFunctions.nameMappers.Msg.creatorPrefix`| Prefix for the function creator for `Msg` services.                                                   | `"create"`                   |
 | `helperFunctions.nameMappers.Msg.hookPrefix`   | Prefix for the hooks for `Msg` services.                                                              | `"use"`                      |
 
 See [Helper Functions Configuration](#helper-functions-configuration) for more info.
@@ -1253,7 +1250,6 @@ The nameMappers object supports three service types: All, Query, and Msg. Each p
 {
   "pattern": {
     funcBody: (name: string) => string,    // Function to transform the method name
-    creatorPrefix?: string,                // Prefix for the creator function (default: "create")
     hookPrefix?: string                    // Prefix for the hook function (default: "use")
   }
 }
@@ -1274,7 +1270,6 @@ const options: TelescopeOptions = {
       All: {
         "cosmos.gov.v1beta1.*Vote*": {
           funcBody: (name) => `helper${name}`,
-          creatorPrefix: "build",
           hookPrefix: "use",
         },
       },
@@ -1286,7 +1281,6 @@ const options: TelescopeOptions = {
       Msg: {
         "cosmos.gov.v1beta1.*VoteWeighted*": {
           funcBody: (name) => `lets${name}`,
-          creatorPrefix: "construct",
           hookPrefix: "useTx",
         },
       },

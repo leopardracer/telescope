@@ -1,7 +1,7 @@
 import { buildUseQuery } from "../../../react-query";
 import { QueryBalancesRequest, QueryBalancesResponse } from "./query";
-import { createGetBalances } from "./query.rpc.func";
+import { getBalances } from "./query.rpc.func";
 export const useGetBalances = buildUseQuery<QueryBalancesRequest, QueryBalancesResponse>({
-  builderQueryFn: createGetBalances,
+  builderQueryFn: getBalances,
   queryKeyPrefix: "BalancesQuery"
 });

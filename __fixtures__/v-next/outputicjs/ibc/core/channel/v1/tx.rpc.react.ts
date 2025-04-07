@@ -1,33 +1,33 @@
 import { buildUseMutation } from "../../../../react-query";
 import { MsgChannelOpenInit, MsgChannelOpenTry, MsgChannelOpenAck, MsgChannelOpenConfirm, MsgChannelCloseInit, MsgChannelCloseConfirm, MsgRecvPacket, MsgTimeout, MsgTimeoutOnClose, MsgAcknowledgement } from "./tx";
-import { createChannelOpenInit, createChannelOpenTry, createChannelOpenAck, createChannelOpenConfirm, createChannelCloseInit, createChannelCloseConfirm, createRecvPacket, createTimeout, createTimeoutOnClose, createAcknowledgement } from "./tx.rpc.func";
+import { channelOpenInit, channelOpenTry, channelOpenAck, channelOpenConfirm, channelCloseInit, channelCloseConfirm, recvPacket, timeout, timeoutOnClose, acknowledgement } from "./tx.rpc.func";
 export const useChannelOpenInit = buildUseMutation<MsgChannelOpenInit, Error>({
-  builderMutationFn: createChannelOpenInit
+  builderMutationFn: channelOpenInit
 });
 export const useChannelOpenTry = buildUseMutation<MsgChannelOpenTry, Error>({
-  builderMutationFn: createChannelOpenTry
+  builderMutationFn: channelOpenTry
 });
 export const useChannelOpenAck = buildUseMutation<MsgChannelOpenAck, Error>({
-  builderMutationFn: createChannelOpenAck
+  builderMutationFn: channelOpenAck
 });
 export const useChannelOpenConfirm = buildUseMutation<MsgChannelOpenConfirm, Error>({
-  builderMutationFn: createChannelOpenConfirm
+  builderMutationFn: channelOpenConfirm
 });
 export const useChannelCloseInit = buildUseMutation<MsgChannelCloseInit, Error>({
-  builderMutationFn: createChannelCloseInit
+  builderMutationFn: channelCloseInit
 });
 export const useChannelCloseConfirm = buildUseMutation<MsgChannelCloseConfirm, Error>({
-  builderMutationFn: createChannelCloseConfirm
+  builderMutationFn: channelCloseConfirm
 });
 export const useRecvPacket = buildUseMutation<MsgRecvPacket, Error>({
-  builderMutationFn: createRecvPacket
+  builderMutationFn: recvPacket
 });
 export const useTimeout = buildUseMutation<MsgTimeout, Error>({
-  builderMutationFn: createTimeout
+  builderMutationFn: timeout
 });
 export const useTimeoutOnClose = buildUseMutation<MsgTimeoutOnClose, Error>({
-  builderMutationFn: createTimeoutOnClose
+  builderMutationFn: timeoutOnClose
 });
 export const useAcknowledgement = buildUseMutation<MsgAcknowledgement, Error>({
-  builderMutationFn: createAcknowledgement
+  builderMutationFn: acknowledgement
 });

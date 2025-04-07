@@ -1,51 +1,44 @@
-import { RpcResolver, buildQuery } from "../../../helper-func-types";
+import { buildQuery } from "../../../helper-func-types";
 import { QueryAccountsRequest, QueryAccountsResponse, QueryAccountRequest, QueryAccountResponse, QueryParamsRequest, QueryParamsResponse, QueryModuleAccountsRequest, QueryModuleAccountsResponse, Bech32PrefixRequest, Bech32PrefixResponse, AddressBytesToStringRequest, AddressBytesToStringResponse, AddressStringToBytesRequest, AddressStringToBytesResponse } from "./query";
-export const createGetAccounts = (clientResolver?: RpcResolver) => buildQuery<QueryAccountsRequest, QueryAccountsResponse>({
+export const getAccounts = buildQuery<QueryAccountsRequest, QueryAccountsResponse>({
   encode: QueryAccountsRequest.encode,
   decode: QueryAccountsResponse.decode,
   service: "cosmos.auth.v1beta1.Query",
-  method: "Accounts",
-  clientResolver
+  method: "Accounts"
 });
-export const createGetAccount = (clientResolver?: RpcResolver) => buildQuery<QueryAccountRequest, QueryAccountResponse>({
+export const getAccount = buildQuery<QueryAccountRequest, QueryAccountResponse>({
   encode: QueryAccountRequest.encode,
   decode: QueryAccountResponse.decode,
   service: "cosmos.auth.v1beta1.Query",
-  method: "Account",
-  clientResolver
+  method: "Account"
 });
-export const createGetParams = (clientResolver?: RpcResolver) => buildQuery<QueryParamsRequest, QueryParamsResponse>({
+export const getParams = buildQuery<QueryParamsRequest, QueryParamsResponse>({
   encode: QueryParamsRequest.encode,
   decode: QueryParamsResponse.decode,
   service: "cosmos.auth.v1beta1.Query",
-  method: "Params",
-  clientResolver
+  method: "Params"
 });
-export const createGetModuleAccounts = (clientResolver?: RpcResolver) => buildQuery<QueryModuleAccountsRequest, QueryModuleAccountsResponse>({
+export const getModuleAccounts = buildQuery<QueryModuleAccountsRequest, QueryModuleAccountsResponse>({
   encode: QueryModuleAccountsRequest.encode,
   decode: QueryModuleAccountsResponse.decode,
   service: "cosmos.auth.v1beta1.Query",
-  method: "ModuleAccounts",
-  clientResolver
+  method: "ModuleAccounts"
 });
-export const createGetBech32Prefix = (clientResolver?: RpcResolver) => buildQuery<Bech32PrefixRequest, Bech32PrefixResponse>({
+export const getBech32Prefix = buildQuery<Bech32PrefixRequest, Bech32PrefixResponse>({
   encode: Bech32PrefixRequest.encode,
   decode: Bech32PrefixResponse.decode,
   service: "cosmos.auth.v1beta1.Query",
-  method: "Bech32Prefix",
-  clientResolver
+  method: "Bech32Prefix"
 });
-export const createGetAddressBytesToString = (clientResolver?: RpcResolver) => buildQuery<AddressBytesToStringRequest, AddressBytesToStringResponse>({
+export const getAddressBytesToString = buildQuery<AddressBytesToStringRequest, AddressBytesToStringResponse>({
   encode: AddressBytesToStringRequest.encode,
   decode: AddressBytesToStringResponse.decode,
   service: "cosmos.auth.v1beta1.Query",
-  method: "AddressBytesToString",
-  clientResolver
+  method: "AddressBytesToString"
 });
-export const createGetAddressStringToBytes = (clientResolver?: RpcResolver) => buildQuery<AddressStringToBytesRequest, AddressStringToBytesResponse>({
+export const getAddressStringToBytes = buildQuery<AddressStringToBytesRequest, AddressStringToBytesResponse>({
   encode: AddressStringToBytesRequest.encode,
   decode: AddressStringToBytesResponse.decode,
   service: "cosmos.auth.v1beta1.Query",
-  method: "AddressStringToBytes",
-  clientResolver
+  method: "AddressStringToBytes"
 });

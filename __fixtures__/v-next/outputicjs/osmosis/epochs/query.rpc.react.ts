@@ -1,11 +1,11 @@
 import { buildUseQuery } from "../../react-query";
 import { QueryEpochsInfoRequest, QueryEpochsInfoResponse, QueryCurrentEpochRequest, QueryCurrentEpochResponse } from "./query";
-import { createGetEpochInfos, createGetCurrentEpoch } from "./query.rpc.func";
+import { getEpochInfos, getCurrentEpoch } from "./query.rpc.func";
 export const useGetEpochInfos = buildUseQuery<QueryEpochsInfoRequest, QueryEpochsInfoResponse>({
-  builderQueryFn: createGetEpochInfos,
+  builderQueryFn: getEpochInfos,
   queryKeyPrefix: "EpochInfosQuery"
 });
 export const useGetCurrentEpoch = buildUseQuery<QueryCurrentEpochRequest, QueryCurrentEpochResponse>({
-  builderQueryFn: createGetCurrentEpoch,
+  builderQueryFn: getCurrentEpoch,
   queryKeyPrefix: "CurrentEpochQuery"
 });

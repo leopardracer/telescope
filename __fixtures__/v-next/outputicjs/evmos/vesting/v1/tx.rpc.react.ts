@@ -1,9 +1,9 @@
 import { buildUseMutation } from "../../../react-query";
 import { MsgCreateClawbackVestingAccount, MsgClawback } from "./tx";
-import { createCreateClawbackVestingAccount, createClawback } from "./tx.rpc.func";
+import { createClawbackVestingAccount, clawback } from "./tx.rpc.func";
 export const useCreateClawbackVestingAccount = buildUseMutation<MsgCreateClawbackVestingAccount, Error>({
-  builderMutationFn: createCreateClawbackVestingAccount
+  builderMutationFn: createClawbackVestingAccount
 });
 export const useClawback = buildUseMutation<MsgClawback, Error>({
-  builderMutationFn: createClawback
+  builderMutationFn: clawback
 });

@@ -1,9 +1,9 @@
 import { buildUseMutation } from "../../../react-query";
 import { MsgSignProviderAttributes, MsgDeleteProviderAttributes } from "./audit";
-import { createSignProviderAttributes, createDeleteProviderAttributes } from "./audit.rpc.func";
+import { signProviderAttributes, deleteProviderAttributes } from "./audit.rpc.func";
 export const useSignProviderAttributes = buildUseMutation<MsgSignProviderAttributes, Error>({
-  builderMutationFn: createSignProviderAttributes
+  builderMutationFn: signProviderAttributes
 });
 export const useDeleteProviderAttributes = buildUseMutation<MsgDeleteProviderAttributes, Error>({
-  builderMutationFn: createDeleteProviderAttributes
+  builderMutationFn: deleteProviderAttributes
 });

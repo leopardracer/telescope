@@ -1,19 +1,19 @@
 import { buildUseQuery } from "../../../react-query";
 import { QueryDevFeeInfosRequest, QueryDevFeeInfosResponse, QueryDevFeeInfoRequest, QueryDevFeeInfoResponse, QueryParamsRequest, QueryParamsResponse, QueryDevFeeInfosPerDeployerRequest, QueryDevFeeInfosPerDeployerResponse } from "./query";
-import { createGetDevFeeInfos, createGetDevFeeInfo, createGetParams, createGetDevFeeInfosPerDeployer } from "./query.rpc.func";
+import { getDevFeeInfos, getDevFeeInfo, getParams, getDevFeeInfosPerDeployer } from "./query.rpc.func";
 export const useGetDevFeeInfos = buildUseQuery<QueryDevFeeInfosRequest, QueryDevFeeInfosResponse>({
-  builderQueryFn: createGetDevFeeInfos,
+  builderQueryFn: getDevFeeInfos,
   queryKeyPrefix: "DevFeeInfosQuery"
 });
 export const useGetDevFeeInfo = buildUseQuery<QueryDevFeeInfoRequest, QueryDevFeeInfoResponse>({
-  builderQueryFn: createGetDevFeeInfo,
+  builderQueryFn: getDevFeeInfo,
   queryKeyPrefix: "DevFeeInfoQuery"
 });
 export const useGetParams = buildUseQuery<QueryParamsRequest, QueryParamsResponse>({
-  builderQueryFn: createGetParams,
+  builderQueryFn: getParams,
   queryKeyPrefix: "ParamsQuery"
 });
 export const useGetDevFeeInfosPerDeployer = buildUseQuery<QueryDevFeeInfosPerDeployerRequest, QueryDevFeeInfosPerDeployerResponse>({
-  builderQueryFn: createGetDevFeeInfosPerDeployer,
+  builderQueryFn: getDevFeeInfosPerDeployer,
   queryKeyPrefix: "DevFeeInfosPerDeployerQuery"
 });

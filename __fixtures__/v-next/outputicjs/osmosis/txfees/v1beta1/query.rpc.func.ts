@@ -1,30 +1,26 @@
-import { RpcResolver, buildQuery } from "../../../helper-func-types";
+import { buildQuery } from "../../../helper-func-types";
 import { QueryFeeTokensRequest, QueryFeeTokensResponse, QueryDenomSpotPriceRequest, QueryDenomSpotPriceResponse, QueryDenomPoolIdRequest, QueryDenomPoolIdResponse, QueryBaseDenomRequest, QueryBaseDenomResponse } from "./query";
-export const createGetFeeTokens = (clientResolver?: RpcResolver) => buildQuery<QueryFeeTokensRequest, QueryFeeTokensResponse>({
+export const getFeeTokens = buildQuery<QueryFeeTokensRequest, QueryFeeTokensResponse>({
   encode: QueryFeeTokensRequest.encode,
   decode: QueryFeeTokensResponse.decode,
   service: "osmosis.txfees.v1beta1.Query",
-  method: "FeeTokens",
-  clientResolver
+  method: "FeeTokens"
 });
-export const createGetDenomSpotPrice = (clientResolver?: RpcResolver) => buildQuery<QueryDenomSpotPriceRequest, QueryDenomSpotPriceResponse>({
+export const getDenomSpotPrice = buildQuery<QueryDenomSpotPriceRequest, QueryDenomSpotPriceResponse>({
   encode: QueryDenomSpotPriceRequest.encode,
   decode: QueryDenomSpotPriceResponse.decode,
   service: "osmosis.txfees.v1beta1.Query",
-  method: "DenomSpotPrice",
-  clientResolver
+  method: "DenomSpotPrice"
 });
-export const createGetDenomPoolId = (clientResolver?: RpcResolver) => buildQuery<QueryDenomPoolIdRequest, QueryDenomPoolIdResponse>({
+export const getDenomPoolId = buildQuery<QueryDenomPoolIdRequest, QueryDenomPoolIdResponse>({
   encode: QueryDenomPoolIdRequest.encode,
   decode: QueryDenomPoolIdResponse.decode,
   service: "osmosis.txfees.v1beta1.Query",
-  method: "DenomPoolId",
-  clientResolver
+  method: "DenomPoolId"
 });
-export const createGetBaseDenom = (clientResolver?: RpcResolver) => buildQuery<QueryBaseDenomRequest, QueryBaseDenomResponse>({
+export const getBaseDenom = buildQuery<QueryBaseDenomRequest, QueryBaseDenomResponse>({
   encode: QueryBaseDenomRequest.encode,
   decode: QueryBaseDenomResponse.decode,
   service: "osmosis.txfees.v1beta1.Query",
-  method: "BaseDenom",
-  clientResolver
+  method: "BaseDenom"
 });

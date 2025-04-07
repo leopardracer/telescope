@@ -1,7 +1,7 @@
 import { buildUseQuery } from "../../../react-query";
 import { QuerySpotPriceRequest, QuerySpotPriceResponse } from "./query";
-import { createGetSpotPrice } from "./query.rpc.func";
+import { getSpotPrice } from "./query.rpc.func";
 export const useGetSpotPrice = buildUseQuery<QuerySpotPriceRequest, QuerySpotPriceResponse>({
-  builderQueryFn: createGetSpotPrice,
+  builderQueryFn: getSpotPrice,
   queryKeyPrefix: "SpotPriceQuery"
 });

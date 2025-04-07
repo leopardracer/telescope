@@ -13,7 +13,6 @@ export declare enum TelescopeLogLevel {
  */
 export interface HelperFuncNameMappersRule {
     funcBody: "unchanged" | "get" | ((name: string) => string);
-    creatorPrefix?: string;
     hookPrefix?: string;
 }
 /**
@@ -26,7 +25,6 @@ export interface HelperFuncNameMappers {
      */
     [key: string]: {
         funcBody: "unchanged" | "get" | ((name: string) => string);
-        creatorPrefix?: string;
         hookPrefix?: string;
     };
 }

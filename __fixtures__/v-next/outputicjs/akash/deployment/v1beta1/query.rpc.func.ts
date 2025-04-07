@@ -1,23 +1,20 @@
-import { RpcResolver, buildQuery } from "../../../helper-func-types";
+import { buildQuery } from "../../../helper-func-types";
 import { QueryDeploymentsRequest, QueryDeploymentsResponse, QueryDeploymentRequest, QueryDeploymentResponse, QueryGroupRequest, QueryGroupResponse } from "./query";
-export const createGetDeployments = (clientResolver?: RpcResolver) => buildQuery<QueryDeploymentsRequest, QueryDeploymentsResponse>({
+export const getDeployments = buildQuery<QueryDeploymentsRequest, QueryDeploymentsResponse>({
   encode: QueryDeploymentsRequest.encode,
   decode: QueryDeploymentsResponse.decode,
   service: "akash.deployment.v1beta1.Query",
-  method: "Deployments",
-  clientResolver
+  method: "Deployments"
 });
-export const createGetDeployment = (clientResolver?: RpcResolver) => buildQuery<QueryDeploymentRequest, QueryDeploymentResponse>({
+export const getDeployment = buildQuery<QueryDeploymentRequest, QueryDeploymentResponse>({
   encode: QueryDeploymentRequest.encode,
   decode: QueryDeploymentResponse.decode,
   service: "akash.deployment.v1beta1.Query",
-  method: "Deployment",
-  clientResolver
+  method: "Deployment"
 });
-export const createGetGroup = (clientResolver?: RpcResolver) => buildQuery<QueryGroupRequest, QueryGroupResponse>({
+export const getGroup = buildQuery<QueryGroupRequest, QueryGroupResponse>({
   encode: QueryGroupRequest.encode,
   decode: QueryGroupResponse.decode,
   service: "akash.deployment.v1beta1.Query",
-  method: "Group",
-  clientResolver
+  method: "Group"
 });

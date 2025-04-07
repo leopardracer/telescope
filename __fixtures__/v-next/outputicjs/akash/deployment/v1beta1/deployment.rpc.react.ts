@@ -1,25 +1,25 @@
 import { MsgCloseGroup, MsgPauseGroup, MsgStartGroup } from "./group";
 import { buildUseMutation } from "../../../react-query";
 import { MsgCreateDeployment, MsgDepositDeployment, MsgUpdateDeployment, MsgCloseDeployment } from "./deployment";
-import { createCreateDeployment, createDepositDeployment, createUpdateDeployment, createCloseDeployment, createCloseGroup, createPauseGroup, createStartGroup } from "./deployment.rpc.func";
+import { createDeployment, depositDeployment, updateDeployment, closeDeployment, closeGroup, pauseGroup, startGroup } from "./deployment.rpc.func";
 export const useCreateDeployment = buildUseMutation<MsgCreateDeployment, Error>({
-  builderMutationFn: createCreateDeployment
+  builderMutationFn: createDeployment
 });
 export const useDepositDeployment = buildUseMutation<MsgDepositDeployment, Error>({
-  builderMutationFn: createDepositDeployment
+  builderMutationFn: depositDeployment
 });
 export const useUpdateDeployment = buildUseMutation<MsgUpdateDeployment, Error>({
-  builderMutationFn: createUpdateDeployment
+  builderMutationFn: updateDeployment
 });
 export const useCloseDeployment = buildUseMutation<MsgCloseDeployment, Error>({
-  builderMutationFn: createCloseDeployment
+  builderMutationFn: closeDeployment
 });
 export const useCloseGroup = buildUseMutation<MsgCloseGroup, Error>({
-  builderMutationFn: createCloseGroup
+  builderMutationFn: closeGroup
 });
 export const usePauseGroup = buildUseMutation<MsgPauseGroup, Error>({
-  builderMutationFn: createPauseGroup
+  builderMutationFn: pauseGroup
 });
 export const useStartGroup = buildUseMutation<MsgStartGroup, Error>({
-  builderMutationFn: createStartGroup
+  builderMutationFn: startGroup
 });

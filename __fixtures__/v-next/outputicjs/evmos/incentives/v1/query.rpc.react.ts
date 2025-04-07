@@ -1,31 +1,31 @@
 import { buildUseQuery } from "../../../react-query";
 import { QueryIncentivesRequest, QueryIncentivesResponse, QueryIncentiveRequest, QueryIncentiveResponse, QueryGasMetersRequest, QueryGasMetersResponse, QueryGasMeterRequest, QueryGasMeterResponse, QueryAllocationMetersRequest, QueryAllocationMetersResponse, QueryAllocationMeterRequest, QueryAllocationMeterResponse, QueryParamsRequest, QueryParamsResponse } from "./query";
-import { createGetIncentives, createGetIncentive, createGetGasMeters, createGetGasMeter, createGetAllocationMeters, createGetAllocationMeter, createGetParams } from "./query.rpc.func";
+import { getIncentives, getIncentive, getGasMeters, getGasMeter, getAllocationMeters, getAllocationMeter, getParams } from "./query.rpc.func";
 export const useGetIncentives = buildUseQuery<QueryIncentivesRequest, QueryIncentivesResponse>({
-  builderQueryFn: createGetIncentives,
+  builderQueryFn: getIncentives,
   queryKeyPrefix: "IncentivesQuery"
 });
 export const useGetIncentive = buildUseQuery<QueryIncentiveRequest, QueryIncentiveResponse>({
-  builderQueryFn: createGetIncentive,
+  builderQueryFn: getIncentive,
   queryKeyPrefix: "IncentiveQuery"
 });
 export const useGetGasMeters = buildUseQuery<QueryGasMetersRequest, QueryGasMetersResponse>({
-  builderQueryFn: createGetGasMeters,
+  builderQueryFn: getGasMeters,
   queryKeyPrefix: "GasMetersQuery"
 });
 export const useGetGasMeter = buildUseQuery<QueryGasMeterRequest, QueryGasMeterResponse>({
-  builderQueryFn: createGetGasMeter,
+  builderQueryFn: getGasMeter,
   queryKeyPrefix: "GasMeterQuery"
 });
 export const useGetAllocationMeters = buildUseQuery<QueryAllocationMetersRequest, QueryAllocationMetersResponse>({
-  builderQueryFn: createGetAllocationMeters,
+  builderQueryFn: getAllocationMeters,
   queryKeyPrefix: "AllocationMetersQuery"
 });
 export const useGetAllocationMeter = buildUseQuery<QueryAllocationMeterRequest, QueryAllocationMeterResponse>({
-  builderQueryFn: createGetAllocationMeter,
+  builderQueryFn: getAllocationMeter,
   queryKeyPrefix: "AllocationMeterQuery"
 });
 export const useGetParams = buildUseQuery<QueryParamsRequest, QueryParamsResponse>({
-  builderQueryFn: createGetParams,
+  builderQueryFn: getParams,
   queryKeyPrefix: "ParamsQuery"
 });

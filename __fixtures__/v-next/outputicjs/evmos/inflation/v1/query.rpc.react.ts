@@ -1,27 +1,27 @@
 import { buildUseQuery } from "../../../react-query";
 import { QueryPeriodRequest, QueryPeriodResponse, QueryEpochMintProvisionRequest, QueryEpochMintProvisionResponse, QuerySkippedEpochsRequest, QuerySkippedEpochsResponse, QueryCirculatingSupplyRequest, QueryCirculatingSupplyResponse, QueryInflationRateRequest, QueryInflationRateResponse, QueryParamsRequest, QueryParamsResponse } from "./query";
-import { createGetPeriod, createGetEpochMintProvision, createGetSkippedEpochs, createGetCirculatingSupply, createGetInflationRate, createGetParams } from "./query.rpc.func";
+import { getPeriod, getEpochMintProvision, getSkippedEpochs, getCirculatingSupply, getInflationRate, getParams } from "./query.rpc.func";
 export const useGetPeriod = buildUseQuery<QueryPeriodRequest, QueryPeriodResponse>({
-  builderQueryFn: createGetPeriod,
+  builderQueryFn: getPeriod,
   queryKeyPrefix: "PeriodQuery"
 });
 export const useGetEpochMintProvision = buildUseQuery<QueryEpochMintProvisionRequest, QueryEpochMintProvisionResponse>({
-  builderQueryFn: createGetEpochMintProvision,
+  builderQueryFn: getEpochMintProvision,
   queryKeyPrefix: "EpochMintProvisionQuery"
 });
 export const useGetSkippedEpochs = buildUseQuery<QuerySkippedEpochsRequest, QuerySkippedEpochsResponse>({
-  builderQueryFn: createGetSkippedEpochs,
+  builderQueryFn: getSkippedEpochs,
   queryKeyPrefix: "SkippedEpochsQuery"
 });
 export const useGetCirculatingSupply = buildUseQuery<QueryCirculatingSupplyRequest, QueryCirculatingSupplyResponse>({
-  builderQueryFn: createGetCirculatingSupply,
+  builderQueryFn: getCirculatingSupply,
   queryKeyPrefix: "CirculatingSupplyQuery"
 });
 export const useGetInflationRate = buildUseQuery<QueryInflationRateRequest, QueryInflationRateResponse>({
-  builderQueryFn: createGetInflationRate,
+  builderQueryFn: getInflationRate,
   queryKeyPrefix: "InflationRateQuery"
 });
 export const useGetParams = buildUseQuery<QueryParamsRequest, QueryParamsResponse>({
-  builderQueryFn: createGetParams,
+  builderQueryFn: getParams,
   queryKeyPrefix: "ParamsQuery"
 });

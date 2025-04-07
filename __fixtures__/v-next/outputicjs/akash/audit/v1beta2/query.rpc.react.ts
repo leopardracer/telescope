@@ -1,19 +1,19 @@
 import { buildUseQuery } from "../../../react-query";
 import { QueryAllProvidersAttributesRequest, QueryProvidersResponse, QueryProviderAttributesRequest, QueryProviderAuditorRequest, QueryAuditorAttributesRequest } from "./query";
-import { createGetAllProvidersAttributes, createGetProviderAttributes, createGetProviderAuditorAttributes, createGetAuditorAttributes } from "./query.rpc.func";
+import { getAllProvidersAttributes, getProviderAttributes, getProviderAuditorAttributes, getAuditorAttributes } from "./query.rpc.func";
 export const useGetAllProvidersAttributes = buildUseQuery<QueryAllProvidersAttributesRequest, QueryProvidersResponse>({
-  builderQueryFn: createGetAllProvidersAttributes,
+  builderQueryFn: getAllProvidersAttributes,
   queryKeyPrefix: "AllProvidersAttributesQuery"
 });
 export const useGetProviderAttributes = buildUseQuery<QueryProviderAttributesRequest, QueryProvidersResponse>({
-  builderQueryFn: createGetProviderAttributes,
+  builderQueryFn: getProviderAttributes,
   queryKeyPrefix: "ProviderAttributesQuery"
 });
 export const useGetProviderAuditorAttributes = buildUseQuery<QueryProviderAuditorRequest, QueryProvidersResponse>({
-  builderQueryFn: createGetProviderAuditorAttributes,
+  builderQueryFn: getProviderAuditorAttributes,
   queryKeyPrefix: "ProviderAuditorAttributesQuery"
 });
 export const useGetAuditorAttributes = buildUseQuery<QueryAuditorAttributesRequest, QueryProvidersResponse>({
-  builderQueryFn: createGetAuditorAttributes,
+  builderQueryFn: getAuditorAttributes,
   queryKeyPrefix: "AuditorAttributesQuery"
 });

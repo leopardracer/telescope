@@ -238,7 +238,6 @@ const options: TelescopeOptions = {
           funcBody: (name: string) => {
             return `helper${name}`;
           },
-          creatorPrefix: "build",
           hookPrefix: "use",
         },
         "cosmos.gov.v1beta1.*Deposit*": {
@@ -263,7 +262,6 @@ const options: TelescopeOptions = {
           funcBody: (name: string) => {
             return `lets${name}`;
           },
-          creatorPrefix: "construct",
           hookPrefix: "useTx",
         },
         // this rule will override Deposit method matched in All

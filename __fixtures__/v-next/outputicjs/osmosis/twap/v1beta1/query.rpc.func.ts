@@ -1,23 +1,20 @@
-import { RpcResolver, buildQuery } from "../../../helper-func-types";
+import { buildQuery } from "../../../helper-func-types";
 import { ParamsRequest, ParamsResponse, ArithmeticTwapRequest, ArithmeticTwapResponse, ArithmeticTwapToNowRequest, ArithmeticTwapToNowResponse } from "./query";
-export const createGetParams = (clientResolver?: RpcResolver) => buildQuery<ParamsRequest, ParamsResponse>({
+export const getParams = buildQuery<ParamsRequest, ParamsResponse>({
   encode: ParamsRequest.encode,
   decode: ParamsResponse.decode,
   service: "osmosis.twap.v1beta1.Query",
-  method: "Params",
-  clientResolver
+  method: "Params"
 });
-export const createGetArithmeticTwap = (clientResolver?: RpcResolver) => buildQuery<ArithmeticTwapRequest, ArithmeticTwapResponse>({
+export const getArithmeticTwap = buildQuery<ArithmeticTwapRequest, ArithmeticTwapResponse>({
   encode: ArithmeticTwapRequest.encode,
   decode: ArithmeticTwapResponse.decode,
   service: "osmosis.twap.v1beta1.Query",
-  method: "ArithmeticTwap",
-  clientResolver
+  method: "ArithmeticTwap"
 });
-export const createGetArithmeticTwapToNow = (clientResolver?: RpcResolver) => buildQuery<ArithmeticTwapToNowRequest, ArithmeticTwapToNowResponse>({
+export const getArithmeticTwapToNow = buildQuery<ArithmeticTwapToNowRequest, ArithmeticTwapToNowResponse>({
   encode: ArithmeticTwapToNowRequest.encode,
   decode: ArithmeticTwapToNowResponse.decode,
   service: "osmosis.twap.v1beta1.Query",
-  method: "ArithmeticTwapToNow",
-  clientResolver
+  method: "ArithmeticTwapToNow"
 });

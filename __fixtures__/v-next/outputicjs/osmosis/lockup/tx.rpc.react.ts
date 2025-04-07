@@ -1,18 +1,18 @@
 import { buildUseMutation } from "../../react-query";
 import { MsgLockTokens, MsgBeginUnlockingAll, MsgBeginUnlocking, MsgExtendLockup, MsgForceUnlock } from "./tx";
-import { createLockTokens, createBeginUnlockingAll, createBeginUnlocking, createExtendLockup, createForceUnlock } from "./tx.rpc.func";
+import { lockTokens, beginUnlockingAll, beginUnlocking, extendLockup, forceUnlock } from "./tx.rpc.func";
 export const useLockTokens = buildUseMutation<MsgLockTokens, Error>({
-  builderMutationFn: createLockTokens
+  builderMutationFn: lockTokens
 });
 export const useBeginUnlockingAll = buildUseMutation<MsgBeginUnlockingAll, Error>({
-  builderMutationFn: createBeginUnlockingAll
+  builderMutationFn: beginUnlockingAll
 });
 export const useBeginUnlocking = buildUseMutation<MsgBeginUnlocking, Error>({
-  builderMutationFn: createBeginUnlocking
+  builderMutationFn: beginUnlocking
 });
 export const useExtendLockup = buildUseMutation<MsgExtendLockup, Error>({
-  builderMutationFn: createExtendLockup
+  builderMutationFn: extendLockup
 });
 export const useForceUnlock = buildUseMutation<MsgForceUnlock, Error>({
-  builderMutationFn: createForceUnlock
+  builderMutationFn: forceUnlock
 });

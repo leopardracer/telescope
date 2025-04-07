@@ -16,7 +16,6 @@ export enum TelescopeLogLevel {
  */
 export interface HelperFuncNameMappersRule {
   funcBody: "unchanged" | "get" | ((name: string) => string);
-  creatorPrefix?: string;
   hookPrefix?: string;
 }
 
@@ -32,8 +31,6 @@ export interface HelperFuncNameMappers {
     // change the method name to a new name to make the body part without the prefix, if pattern matched.
     // Otherwise, see defaults in Query and Msg.
     funcBody: "unchanged" | "get" | ((name: string) => string);
-    // prefix for the creator function, if pattern matched. Otherwise, default to "create"
-    creatorPrefix?: string;
     // prefix for the hook function, if pattern matched. Otherwise, default to "use"
     hookPrefix?: string;
   };

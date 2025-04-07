@@ -1,27 +1,27 @@
 import { buildUseQuery } from "../../../../react-query";
 import { GetNodeInfoRequest, GetNodeInfoResponse, GetSyncingRequest, GetSyncingResponse, GetLatestBlockRequest, GetLatestBlockResponse, GetBlockByHeightRequest, GetBlockByHeightResponse, GetLatestValidatorSetRequest, GetLatestValidatorSetResponse, GetValidatorSetByHeightRequest, GetValidatorSetByHeightResponse } from "./query";
-import { createGetGetNodeInfo, createGetGetSyncing, createGetGetLatestBlock, createGetGetBlockByHeight, createGetGetLatestValidatorSet, createGetGetValidatorSetByHeight } from "./query.rpc.func";
+import { getGetNodeInfo, getGetSyncing, getGetLatestBlock, getGetBlockByHeight, getGetLatestValidatorSet, getGetValidatorSetByHeight } from "./query.rpc.func";
 export const useGetGetNodeInfo = buildUseQuery<GetNodeInfoRequest, GetNodeInfoResponse>({
-  builderQueryFn: createGetGetNodeInfo,
+  builderQueryFn: getGetNodeInfo,
   queryKeyPrefix: "GetNodeInfoQuery"
 });
 export const useGetGetSyncing = buildUseQuery<GetSyncingRequest, GetSyncingResponse>({
-  builderQueryFn: createGetGetSyncing,
+  builderQueryFn: getGetSyncing,
   queryKeyPrefix: "GetSyncingQuery"
 });
 export const useGetGetLatestBlock = buildUseQuery<GetLatestBlockRequest, GetLatestBlockResponse>({
-  builderQueryFn: createGetGetLatestBlock,
+  builderQueryFn: getGetLatestBlock,
   queryKeyPrefix: "GetLatestBlockQuery"
 });
 export const useGetGetBlockByHeight = buildUseQuery<GetBlockByHeightRequest, GetBlockByHeightResponse>({
-  builderQueryFn: createGetGetBlockByHeight,
+  builderQueryFn: getGetBlockByHeight,
   queryKeyPrefix: "GetBlockByHeightQuery"
 });
 export const useGetGetLatestValidatorSet = buildUseQuery<GetLatestValidatorSetRequest, GetLatestValidatorSetResponse>({
-  builderQueryFn: createGetGetLatestValidatorSet,
+  builderQueryFn: getGetLatestValidatorSet,
   queryKeyPrefix: "GetLatestValidatorSetQuery"
 });
 export const useGetGetValidatorSetByHeight = buildUseQuery<GetValidatorSetByHeightRequest, GetValidatorSetByHeightResponse>({
-  builderQueryFn: createGetGetValidatorSetByHeight,
+  builderQueryFn: getGetValidatorSetByHeight,
   queryKeyPrefix: "GetValidatorSetByHeightQuery"
 });

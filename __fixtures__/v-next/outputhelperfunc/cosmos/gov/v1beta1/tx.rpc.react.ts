@@ -6,21 +6,20 @@ import { ClientUpdateProposal, ClientUpdateProposalSDKType, UpgradeProposal, Upg
 import { ReplacePoolIncentivesProposal, ReplacePoolIncentivesProposalSDKType, UpdatePoolIncentivesProposal, UpdatePoolIncentivesProposalSDKType } from "../../../osmosis/pool-incentives/v1beta1/gov";
 import { SetSuperfluidAssetsProposal, SetSuperfluidAssetsProposalSDKType, RemoveSuperfluidAssetsProposal, RemoveSuperfluidAssetsProposalSDKType, UpdateUnpoolWhiteListProposal, UpdateUnpoolWhiteListProposalSDKType } from "../../../osmosis/superfluid/v1beta1/gov";
 import { UpdateFeeTokenProposal, UpdateFeeTokenProposalSDKType } from "../../../osmosis/txfees/v1beta1/gov";
-import { buildTx, ISigningClient, SigningClientResolver } from "../../../helper-func-types";
-import { toEncoders, toConverters } from "@interchainjs/cosmos/utils";
+import { buildTx } from "../../../helper-func-types";
 import { buildUseMutation } from "../../../react-query";
 import { buildUseVueMutation } from "../../../vue-query";
 import { MsgSubmitProposal, MsgSubmitProposalSDKType, MsgSubmitProposalResponse, MsgSubmitProposalResponseSDKType, MsgVote, MsgVoteSDKType, MsgVoteResponse, MsgVoteResponseSDKType, MsgVoteWeighted, MsgVoteWeightedSDKType, MsgVoteWeightedResponse, MsgVoteWeightedResponseSDKType, MsgDeposit, MsgDepositSDKType, MsgDepositResponse, MsgDepositResponseSDKType } from "./tx";
-import { createSubmitProposal, buildHelperVote, constructLetsVoteWeighted, createToDeposit } from "./tx.rpc.func";
+import { submitProposal, helperVote, letsVoteWeighted, toDeposit } from "./tx.rpc.func";
 export const useSubmitProposal = buildUseMutation<MsgSubmitProposal, Error>({
-  builderMutationFn: createSubmitProposal
+  builderMutationFn: submitProposal
 });
 export const useHelperVote = buildUseMutation<MsgVote, Error>({
-  builderMutationFn: buildHelperVote
+  builderMutationFn: helperVote
 });
 export const useTxLetsVoteWeighted = buildUseMutation<MsgVoteWeighted, Error>({
-  builderMutationFn: constructLetsVoteWeighted
+  builderMutationFn: letsVoteWeighted
 });
 export const useToDeposit = buildUseMutation<MsgDeposit, Error>({
-  builderMutationFn: createToDeposit
+  builderMutationFn: toDeposit
 });

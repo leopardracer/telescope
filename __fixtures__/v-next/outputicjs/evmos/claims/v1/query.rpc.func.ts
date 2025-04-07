@@ -1,30 +1,26 @@
-import { RpcResolver, buildQuery } from "../../../helper-func-types";
+import { buildQuery } from "../../../helper-func-types";
 import { QueryTotalUnclaimedRequest, QueryTotalUnclaimedResponse, QueryParamsRequest, QueryParamsResponse, QueryClaimsRecordsRequest, QueryClaimsRecordsResponse, QueryClaimsRecordRequest, QueryClaimsRecordResponse } from "./query";
-export const createGetTotalUnclaimed = (clientResolver?: RpcResolver) => buildQuery<QueryTotalUnclaimedRequest, QueryTotalUnclaimedResponse>({
+export const getTotalUnclaimed = buildQuery<QueryTotalUnclaimedRequest, QueryTotalUnclaimedResponse>({
   encode: QueryTotalUnclaimedRequest.encode,
   decode: QueryTotalUnclaimedResponse.decode,
   service: "evmos.claims.v1.Query",
-  method: "TotalUnclaimed",
-  clientResolver
+  method: "TotalUnclaimed"
 });
-export const createGetParams = (clientResolver?: RpcResolver) => buildQuery<QueryParamsRequest, QueryParamsResponse>({
+export const getParams = buildQuery<QueryParamsRequest, QueryParamsResponse>({
   encode: QueryParamsRequest.encode,
   decode: QueryParamsResponse.decode,
   service: "evmos.claims.v1.Query",
-  method: "Params",
-  clientResolver
+  method: "Params"
 });
-export const createGetClaimsRecords = (clientResolver?: RpcResolver) => buildQuery<QueryClaimsRecordsRequest, QueryClaimsRecordsResponse>({
+export const getClaimsRecords = buildQuery<QueryClaimsRecordsRequest, QueryClaimsRecordsResponse>({
   encode: QueryClaimsRecordsRequest.encode,
   decode: QueryClaimsRecordsResponse.decode,
   service: "evmos.claims.v1.Query",
-  method: "ClaimsRecords",
-  clientResolver
+  method: "ClaimsRecords"
 });
-export const createGetClaimsRecord = (clientResolver?: RpcResolver) => buildQuery<QueryClaimsRecordRequest, QueryClaimsRecordResponse>({
+export const getClaimsRecord = buildQuery<QueryClaimsRecordRequest, QueryClaimsRecordResponse>({
   encode: QueryClaimsRecordRequest.encode,
   decode: QueryClaimsRecordResponse.decode,
   service: "evmos.claims.v1.Query",
-  method: "ClaimsRecord",
-  clientResolver
+  method: "ClaimsRecord"
 });
