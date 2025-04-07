@@ -569,6 +569,7 @@ See [Helper Functions Configuration](#helper-functions-configuration) for more i
 | option                         | description                                                     | defaults   |
 | ------------------------------ | --------------------------------------------------------------  | ---------- |
 | `bundle.enabled`               | bundle all files into a scoped index file                       | `true`     |
+> **Warning:** This option is not recommended. It will generate a bundle file that exports all the types and functions under one namespace. This will make the bundle file very large and hard to maintain. e.g. using `cosmos.bank.v1beta1.MsgSend` might be intuitive, but it will also include `cosmos.gov.v1beta1.*` and other types in the final bundle file. So use this option with caution.
 
 ### Output
 
@@ -1378,7 +1379,7 @@ A unified toolkit for building applications and smart contracts in the Interchai
 
 ## Credits
 
-🛠 Built by Hyperweb (formerly Cosmology) — if you like our tools, please checkout and contribute to [our github ⚛️](https://github.com/hyperweb-io)
+🛠 Built by Hyperweb (formerly Cosmology) — if you like our tools, please checkout and contribute to [our github ⚛️](https://github.com/hyperweb-io)
 
 Thanks to these engineers, teams and projects for inspiring Telescope:
 
@@ -1391,6 +1392,6 @@ Thanks to these engineers, teams and projects for inspiring Telescope:
 
 ## Disclaimer
 
-AS DESCRIBED IN THE LICENSES, THE SOFTWARE IS PROVIDED “AS IS”, AT YOUR OWN RISK, AND WITHOUT WARRANTIES OF ANY KIND.
+AS DESCRIBED IN THE LICENSES, THE SOFTWARE IS PROVIDED "AS IS", AT YOUR OWN RISK, AND WITHOUT WARRANTIES OF ANY KIND.
 
 No developer or entity involved in creating this software will be liable for any claims or damages whatsoever associated with your use, inability to use, or your interaction with other users of the code, including any direct, indirect, incidental, special, exemplary, punitive or consequential damages, or loss of profits, cryptocurrencies, tokens, or anything else of value.
