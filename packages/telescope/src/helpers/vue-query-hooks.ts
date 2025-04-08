@@ -12,9 +12,8 @@ import {
 import {
   ITxArgs,
   ISigningClient,
-  SigningClientResolver,
-  RpcResolver,
-  isISigningClient
+  isISigningClient,
+  EndpointOrRpc,
 } from './helper-func-types${options.restoreImportExtension ?? ""}'
 import {
   StdFee,
@@ -112,9 +111,7 @@ export function useRpcClient<TData = ProtobufRpcClient>({
 }
 
 export interface UseQueryBuilderOptions<TReq, TRes> {
-  builderQueryFn: (
-    clientResolver?: RpcResolver
-  ) => (request: TReq) => Promise<TRes>;
+  builderQueryFn: (client: EndpointOrRpc, request: TReq) => Promise<TRes>;
   queryKeyPrefix: string;
 }
 
@@ -128,7 +125,7 @@ export function buildUseVueQuery<TReq, TRes>(
     customizedQueryKey,
   }: UseQueryParams<TReq, TRes, TData>) {
     const queryClient = useQueryClient();
-    let rpcResolver: RpcResolver | undefined;
+    let rpcResolver: EndpointOrRpc | undefined;
     if (isRpc(clientResolver)) {
       rpcResolver = clientResolver;
 
@@ -147,10 +144,9 @@ export function buildUseVueQuery<TReq, TRes>(
 
     }
 
-    const queryFn = opts.builderQueryFn(rpcResolver);
     return useQuery<TRes, Error, TData>({
       queryKey: customizedQueryKey || [opts.queryKeyPrefix, request],
-      queryFn: () => queryFn(request.value),
+      queryFn: () => opts.builderQueryFn(rpcResolver!, request.value),
       ...options
     }
     );
@@ -160,7 +156,7 @@ export function buildUseVueQuery<TReq, TRes>(
 export interface UseQueryParams<TReq, TRes, TData = TRes>
   extends VueQueryParams<TRes, TData> {
   request: Ref<TReq>;
-  clientResolver?: CacheResolver | RpcResolver;
+  clientResolver?: CacheResolver | EndpointOrRpc;
   customizedQueryKey?: QueryKey;
 }
 
@@ -171,13 +167,12 @@ export interface VueMutationParams<
   TContext = unknown
 > {
   options?: UseMutationOptions<TData, TError, TVariables, TContext>;
-  clientResolver?: CacheResolver | SigningClientResolver;
+  clientResolver?: CacheResolver | ISigningClient;
 }
 
 export interface UseMutationBuilderOptions<TMsg> {
   builderMutationFn: (
-    clientResolver?: SigningClientResolver
-  ) => (
+    client: ISigningClient,
     signerAddress: string,
     message: TMsg | TMsg[],
     fee: StdFee | 'auto',
@@ -194,7 +189,7 @@ export function buildUseVueMutation<TMsg, TError>(
   }: VueMutationParams<DeliverTxResponse, TError, ITxArgs<TMsg>>) {
     const queryClient = useQueryClient();
 
-    let signingClientResolver: SigningClientResolver | undefined;
+    let signingClientResolver: ISigningClient | undefined;
 
     if (isISigningClient(clientResolver)) {
       signingClientResolver = clientResolver;
@@ -211,12 +206,11 @@ export function buildUseVueMutation<TMsg, TError>(
       clientResolver = clientResolver;
     }
 
-    const mutationFn = opts.builderMutationFn(signingClientResolver);
-
     return useMutation<DeliverTxResponse, TError, ITxArgs<TMsg>>(
       {
         mutationFn: (reqData: ITxArgs<TMsg>) =>
-          mutationFn(
+          opts.builderMutationFn(
+            signingClientResolver!,
             reqData.signerAddress,
             reqData.message,
             reqData.fee,
