@@ -2,7 +2,7 @@ import * as shell from "shelljs";
 import { readFileSync } from "fs";
 import { clone, cloneAll, extractProto } from "../protod/recursive";
 import { removeFolder } from "../protod/utils";
-import { DownloadOptions } from "src/protod/types";
+import { DownloadOptions } from "../protod/types";
 import deepmerge from "deepmerge";
 import { presetProtoDirMapping } from "../protod/config";
 
