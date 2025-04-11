@@ -6,7 +6,7 @@ import {
   ProtoCopyOptions,
   CloneAllOptions,
 } from "./types";
-import { join, dirname, resolve } from "path";
+import { join, dirname, resolve, relative } from "path";
 import { getCorrespondingGit, makeDir, parseProtoFile } from "./utils";
 import fs from "fs";
 import { crossGlob as glob } from '@cosmology/utils';
@@ -131,12 +131,13 @@ function extractProtoFromDirs({
 
   for (const target of targets) {
     for (const source of Object.values(sources)) {
-      const files = glob(join(source.protoPath, target));
+      const sourceProtoPath = resolve(source.protoPath);
+      const files = glob(join(sourceProtoPath, target));
 
       extractProtoFiles.push(
         ...files
           .map((file) => {
-            const copyTarget = file.replace(resolve(source.protoPath), "");
+            const copyTarget = relative(sourceProtoPath, file);
             const duplicate = existingFiles.has(copyTarget);
             existingFiles.add(copyTarget);
             if (!duplicate) {
