@@ -29,7 +29,7 @@ service Query {
         "/osmosis/concentratedliquidity/v1beta1/params";
   }
 
-  // UserPositions returns all concentrated postitions of some address.
+  // UserPositions returns all concentrated positions of some address.
   rpc UserPositions(QueryUserPositionsRequest)
       returns (QueryUserPositionsResponse) {
     option (google.api.http).get =
